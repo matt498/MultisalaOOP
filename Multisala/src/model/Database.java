@@ -173,12 +173,14 @@ public class Database {
 	public void addTicket(int numero, Boolean occupato, Boolean intero) {
 		Seat seat = sala.getSeatList().get(numero);
 		
+		Ticket ticket = new Ticket(seat);
+		ticket.setId(seat.getNumero());
+		
 		if(seat.getOccupato() == false) {
 			if(occupato == false) {
 				order.getTicketList().remove(seat.getNumero());
 			}
 			else {
-				Ticket ticket = new Ticket(seat);
 				if(intero) {
 					ticket.setPrice(10);
 				}
@@ -193,7 +195,6 @@ public class Database {
 				order.getTicketList().remove(seat.getNumero());
 			}
 			else {
-				Ticket ticket = new Ticket(seat);
 				if(intero) {
 					ticket.setPrice(10);
 				}

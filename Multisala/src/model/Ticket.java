@@ -34,5 +34,10 @@ public class Ticket {
 	public String toString() {
 		return "Ticket [id=" + id + ", price=" + price + "]";
 	}
+
+	public void setId(Integer numero) {
+		// TODO Auto-generated method stub
+		this.id=numero;
+	}
 	
 }
