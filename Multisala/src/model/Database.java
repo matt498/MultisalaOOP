@@ -178,7 +178,6 @@ public class Database {
 				order.getTicketList().remove(seat.getNumero());
 			}
 			else {
-				seat.setOccupato(occupato);
 				Ticket ticket = new Ticket(seat);
 				if(intero) {
 					ticket.setPrice(10);
@@ -194,7 +193,6 @@ public class Database {
 				order.getTicketList().remove(seat.getNumero());
 			}
 			else {
-				seat.setOccupato(occupato);
 				Ticket ticket = new Ticket(seat);
 				if(intero) {
 					ticket.setPrice(10);
