@@ -1,0 +1,226 @@
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+
+import controller.Controller;
+import model.Sala;
+import model.Seat;
+
+public class ReservationPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+	private JToggleButton interoButton;
+	private JToggleButton ridottoButton;
+	private ButtonGroup bigliettoGroup;
+	private JLabel interiLabel;
+	private JTextField interiField;
+	private JLabel ridottiLabel;
+	private JTextField ridottiField;
+	private JLabel prenotatiLabel;
+	private JTextField prenotatiField;
+	private JLabel capienzaLabel;
+	private JTextField capienzaField;
+	private JPanel upperPanel;
+	private JPanel lowerPanel;
+	private Controller controller;
+	private FilmBarPanel filmBarPanel;
+
+	public ReservationPanel(Controller controller, FilmBarPanel filmBarPanel) {
+
+		setLayout(new BorderLayout());
+
+		this.controller = controller;
+		this.filmBarPanel = filmBarPanel;
+
+		interoButton = new JToggleButton("INTERO");
+		ridottoButton = new JToggleButton("RIDOTTO");
+		bigliettoGroup = new ButtonGroup();
+
+		interiLabel = new JLabel("Interi: ");
+		ridottiLabel = new JLabel("Ridotti: ");
+		prenotatiLabel = new JLabel("Prenotati: ");
+		capienzaLabel = new JLabel("Capienza: ");
+
+		interiField = new JTextField(5);
+		interiField.setEditable(false);
+		ridottiField = new JTextField(5);
+		ridottiField.setEditable(false);
+		prenotatiField = new JTextField(5);
+		prenotatiField.setEditable(false);
+		capienzaField = new JTextField(5);
+		capienzaField.setEditable(false);
+
+		bigliettoGroup.add(interoButton);
+		bigliettoGroup.add(ridottoButton);
+
+		interoButton.setSelected(true);
+
+		upperPanel = new JPanel();
+		upperlayout();
+
+		lowerPanel = new JPanel();
+
+		setBorder(BorderFactory.createTitledBorder("Reservation"));
+
+		add(upperPanel, BorderLayout.NORTH);
+		add(new JScrollPane(lowerPanel), BorderLayout.CENTER);
+
+		this.filmBarPanel.setSalaListener(new SalaListener() {
+			@Override
+			public void salaActionPerformed(ProiezioneEvent proEvent) {
+				System.out.println(proEvent.getNumeroSala());
+
+				try {
+					controller.loadSala(proEvent);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				lowerLayout();
+				revalidate();
+			}
+		});
+	}
+
+	private void lowerLayout() {
+
+		Sala sala = controller.getSala();
+
+		lowerPanel.setLayout(new GridBagLayout());
+
+		// Border innerBorder = BorderFactory.createLoweredSoftBevelBorder();
+		// Border outerBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+		// lowerPanel.setBorder(BorderFactory.createCompoundBorder(outerBorder,
+		// innerBorder));
+
+		GridBagConstraints gc = new GridBagConstraints();
+
+		gc.gridx = 0;
+		gc.gridy = 0;
+
+		if (sala.getId() == 1 || sala.getId()== 2) {
+
+			int cont = 0;
+			for (int i = 0; i < 6; i++) {
+				for (int j = 0; j < 25; j++, cont++) {
+					Seat seat = sala.getSeatList().get(cont);
+					SeatButton seatButton = new SeatButton(seat.getNumero(), seat.getOccupato()); // mettere a posto
+																									// l'indice
+					lowerPanel.add(seatButton, gc);
+					gc.gridx++;
+				}
+				gc.gridy++;
+				gc.gridx = 0;
+			}
+		}
+	}
+
+	private void upperlayout() {
+		GridBagConstraints gc = new GridBagConstraints();
+
+		// first element //
+		gc.gridx = 0;
+		gc.gridy = 0;
+
+		Dimension dim = ridottoButton.getPreferredSize();
+		interoButton.setPreferredSize(dim);
+
+		upperPanel.add(interoButton, gc);
+
+		// second element //
+		gc.gridy++;
+
+		upperPanel.add(ridottoButton, gc);
+
+		// third element //
+		gc.gridy++;
+
+		upperPanel.add(interiLabel, gc);
+
+		gc.gridy++;
+
+		upperPanel.add(interiField, gc);
+
+		// fourth element //
+		gc.gridy++;
+
+		upperPanel.add(ridottiLabel, gc);
+
+		gc.gridy++;
+
+		upperPanel.add(ridottiField, gc);
+
+		// fifth element //
+		gc.gridy++;
+
+		upperPanel.add(prenotatiLabel, gc);
+
+		gc.gridy++;
+
+		upperPanel.add(prenotatiField, gc);
+
+		// sixth element //
+		gc.gridy++;
+
+		upperPanel.add(capienzaLabel, gc);
+
+		gc.gridy++;
+
+		upperPanel.add(capienzaField, gc);
+	}
+}
+
+class SeatButton extends JToggleButton {
+	private Integer numero;
+	private Boolean occupato;
+
+	public SeatButton(Integer numero, Boolean occupato) {
+		this.numero = numero;
+		this.occupato = occupato;
+
+		setText(String.format("%s", numero.toString()));
+
+		setSelected(occupato);
+
+		addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(numero);
+
+			}
+		});
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public Boolean getOccupato() {
+		return occupato;
+	}
+
+	public void setOccupato(Boolean occupato) {
+		this.occupato = occupato;
+	}
+
+};
