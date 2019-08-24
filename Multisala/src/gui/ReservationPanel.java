@@ -120,8 +120,9 @@ public class ReservationPanel extends JPanel {
 			for (int i = 0; i < 6; i++) {
 				for (int j = 0; j < 25; j++, cont++) {
 					Seat seat = sala.getSeatList().get(cont);
-					SeatButton seatButton = new SeatButton(seat.getNumero(), seat.getOccupato()); // mettere a posto
+					SeatButton seatButton = new SeatButton(seat.getNumero(), seat.getOccupato(), this, this.controller); // mettere a posto
 																									// l'indice
+					seatButton.setEnabled(!(seat.getOccupato()));
 					lowerPanel.add(seatButton, gc);
 					gc.gridx++;
 				}
@@ -184,13 +185,17 @@ public class ReservationPanel extends JPanel {
 
 		upperPanel.add(capienzaField, gc);
 	}
+	
+	public Boolean getIntero() {
+		return interoButton.isSelected();
+	}
 }
 
 class SeatButton extends JToggleButton {
 	private Integer numero;
 	private Boolean occupato;
 
-	public SeatButton(Integer numero, Boolean occupato) {
+	public SeatButton(Integer numero, Boolean occupato, ReservationPanel resPanel, Controller controller) {
 		this.numero = numero;
 		this.occupato = occupato;
 
@@ -202,7 +207,9 @@ class SeatButton extends JToggleButton {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(numero);
-
+				Boolean status = isSelected();
+				Boolean intero = resPanel.getIntero();
+				controller.addTicket(numero, status, intero);
 			}
 		});
 	}

@@ -17,6 +17,7 @@ public class Database {
 	private Sala sala;
 	private List<Proiezione> proList;
 	private Connection con;
+	private Order order;
 
 	private int port;
 	private String user;
@@ -166,6 +167,44 @@ public class Database {
 		results.close();
 		selectStmt.close();
 
+	}
+	
+	public void addTicket(int numero, Boolean occupato, Boolean intero) {
+		Seat seat = sala.getSeatList().get(numero);
+		
+		if(seat.getOccupato() == false) {
+			if(occupato == false) {
+				order.getTicketList().remove(seat.getNumero());
+			}
+			else {
+				seat.setOccupato(occupato);
+				Ticket ticket = new Ticket(seat);
+				if(intero) {
+					ticket.setPrice(10);
+				}
+				else {
+					ticket.setPrice(6);
+				}
+				order.getTicketList().put(seat.getNumero(), ticket);
+			}
+		}
+		else {
+			if(occupato == true) {
+				order.getTicketList().remove(seat.getNumero());
+			}
+			else {
+				seat.setOccupato(occupato);
+				Ticket ticket = new Ticket(seat);
+				if(intero) {
+					ticket.setPrice(10);
+				}
+				else {
+					ticket.setPrice(6);
+				}
+				order.getTicketList().put(seat.getNumero(), ticket);
+			}
+		}
+		
 	}
 
 	/*
