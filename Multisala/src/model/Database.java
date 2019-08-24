@@ -26,6 +26,7 @@ public class Database {
 	public Database() {
 		sala = new Sala();
 		proList = new ArrayList<Proiezione>();
+		order = new Order();
 	}
 
 	public int getSeat() {
@@ -185,7 +186,7 @@ public class Database {
 				else {
 					ticket.setPrice(6);
 				}
-				order.getTicketList().put(seat.getNumero(), ticket);
+				order.getTicketList().put(numero, ticket);
 			}
 		}
 		else {
@@ -203,6 +204,10 @@ public class Database {
 				}
 				order.getTicketList().put(seat.getNumero(), ticket);
 			}
+		}
+		
+		for(Integer key: order.getTicketList().keySet()) {
+			System.out.println(order.getTicketList().get(key));
 		}
 		
 	}
