@@ -122,7 +122,7 @@ public class ReservationPanel extends JPanel {
 		}
 	}
 
-	private void lowerLayout() {
+	public void lowerLayout() {
 
 		Sala sala = controller.getSala();
 

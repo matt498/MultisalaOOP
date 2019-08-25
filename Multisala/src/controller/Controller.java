@@ -57,5 +57,9 @@ public class Controller {
 	public int getTotale() {
 		return db.getTotale();
 	}
+	
+	public void deleteOrder() {
+		db.deleteOrder();
+	}
 
 }

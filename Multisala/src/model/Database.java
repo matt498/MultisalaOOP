@@ -215,6 +215,10 @@ public class Database {
 		}
 
 	}
+	
+	public void deleteOrder() {
+		this.order.getTicketList().clear();
+	}
 
 	/*
 	 * public void insertPoltrone() throws Exception { connect();

@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -11,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+
+import controller.Controller;
 
 public class CheckOutPanel extends JPanel {
 
@@ -24,7 +28,7 @@ public class CheckOutPanel extends JPanel {
 	private JButton cancelButton;
 	private ReservationPanel resPanel;
 	
-	public CheckOutPanel(ReservationPanel resPanel) {
+	public CheckOutPanel(ReservationPanel resPanel, Controller controller) {
 		
 		totLabel = new JLabel("Totale: ");
 		totField = new JTextField(10);
@@ -39,6 +43,15 @@ public class CheckOutPanel extends JPanel {
 			@Override
 			public void refreshTot(Integer totale) {
 				totField.setText(totale.toString());
+			}
+		});
+		
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				totField.setText(new Integer(0).toString());
+				controller.deleteOrder();
+				resPanel.lowerLayout();
 			}
 		});
 		
