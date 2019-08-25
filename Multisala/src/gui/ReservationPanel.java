@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -91,11 +94,27 @@ public class ReservationPanel extends JPanel {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-
+				
+				remPosti();
 				lowerLayout();
-				revalidate();
 			}
 		});
+	}
+	
+	private void remPosti() {
+		//Get the components in the panel
+		Component[] componentList = lowerPanel.getComponents();
+
+		//Loop through the components
+		for(Component c : componentList){
+
+		    //Find the components you want to remove
+		    if(c instanceof SeatButton){
+
+		        //Remove it
+		        this.lowerPanel.remove(c);
+		    }
+		}
 	}
 
 	private void lowerLayout() {
@@ -130,6 +149,9 @@ public class ReservationPanel extends JPanel {
 				gc.gridx = 0;
 			}
 		}
+		
+		this.lowerPanel.revalidate();
+		this.lowerPanel.repaint();
 	}
 
 	private void upperlayout() {
