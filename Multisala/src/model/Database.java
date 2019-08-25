@@ -171,7 +171,7 @@ public class Database {
 	}
 	
 	public void addTicket(int numero, Boolean occupato, Boolean intero) {
-		Seat seat = sala.getSeatList().get(numero);
+		Seat seat = sala.getSeatList().get(numero-1);
 		
 		Ticket ticket = new Ticket(seat);
 		ticket.setId(seat.getNumero());
@@ -201,7 +201,7 @@ public class Database {
 				else {
 					ticket.setPrice(6);
 				}
-				order.getTicketList().put(seat.getNumero(), ticket);
+				order.getTicketList().put(numero, ticket);
 			}
 		}
 		

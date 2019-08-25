@@ -206,7 +206,6 @@ class SeatButton extends JToggleButton {
 		addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(numero);
 				Boolean status = isSelected();
 				Boolean intero = resPanel.getIntero();
 				controller.addTicket(numero, status, intero);
