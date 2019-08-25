@@ -53,5 +53,9 @@ public class Controller {
 	public void addTicket(int numero, Boolean occupato, Boolean intero) {
 		db.addTicket(numero, occupato, intero);
 	}
+	
+	public int getTotale() {
+		return db.getTotale();
+	}
 
 }

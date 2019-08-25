@@ -226,6 +226,7 @@ class SeatButton extends JToggleButton {
 				Boolean status = isSelected();
 				Boolean intero = resPanel.getIntero();
 				controller.addTicket(numero, status, intero);
+				
 			}
 		});
 	}

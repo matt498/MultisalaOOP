@@ -32,7 +32,7 @@ public class Database {
 	public int getSeat() {
 		return proList.size();
 	}
-	
+
 	public Sala getSala() {
 		return sala;
 	}
@@ -78,7 +78,17 @@ public class Database {
 		}
 	}
 
-	/// DA SISTEMARE ///
+	public int getTotale() {
+
+		int totale = 0;
+		for (Integer ticketId : order.getTicketList().keySet()) {
+			int price = order.getTicketList().get(ticketId).getPrice();
+			totale += price;
+		}
+		
+		return totale;
+
+	}
 
 	public void loadSala(ProiezioneEvent proEvent) throws SQLException {
 		sala.getSeatList().clear();
@@ -139,8 +149,8 @@ public class Database {
 
 		results.close();
 		checkStmt.close();
-		
-		for(Seat seat: sala.getSeatList()) {
+
+		for (Seat seat : sala.getSeatList()) {
 			System.out.println(seat.getNumero() + " " + seat.getOccupato());
 		}
 	}
@@ -169,46 +179,41 @@ public class Database {
 		selectStmt.close();
 
 	}
-	
+
 	public void addTicket(int numero, Boolean occupato, Boolean intero) {
-		Seat seat = sala.getSeatList().get(numero-1);
-		
+		Seat seat = sala.getSeatList().get(numero - 1);
+
 		Ticket ticket = new Ticket(seat);
 		ticket.setId(seat.getNumero());
-		
-		if(seat.getOccupato() == false) {
-			if(occupato == false) {
+
+		if (seat.getOccupato() == false) {
+			if (occupato == false) {
 				order.getTicketList().remove(seat.getNumero());
-			}
-			else {
-				if(intero) {
+			} else {
+				if (intero) {
 					ticket.setPrice(10);
+				} else {
+					ticket.setPrice(6);
 				}
-				else {
+				order.getTicketList().put(numero, ticket);
+			}
+		} else {
+			if (occupato == true) {
+				order.getTicketList().remove(seat.getNumero());
+			} else {
+				if (intero) {
+					ticket.setPrice(10);
+				} else {
 					ticket.setPrice(6);
 				}
 				order.getTicketList().put(numero, ticket);
 			}
 		}
-		else {
-			if(occupato == true) {
-				order.getTicketList().remove(seat.getNumero());
-			}
-			else {
-				if(intero) {
-					ticket.setPrice(10);
-				}
-				else {
-					ticket.setPrice(6);
-				}
-				order.getTicketList().put(numero, ticket);
-			}
-		}
-		
-		for(Integer key: order.getTicketList().keySet()) {
+
+		for (Integer key : order.getTicketList().keySet()) {
 			System.out.println(order.getTicketList().get(key));
 		}
-		
+
 	}
 
 	/*
