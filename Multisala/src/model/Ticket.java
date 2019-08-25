@@ -29,5 +29,15 @@ public class Ticket {
 	public Integer getId() {
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return "Ticket [id=" + id + ", price=" + price + "]";
+	}
+
+	public void setId(Integer numero) {
+		// TODO Auto-generated method stub
+		this.id=numero;
+	}
 	
 }

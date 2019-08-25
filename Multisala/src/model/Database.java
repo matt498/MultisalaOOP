@@ -17,6 +17,7 @@ public class Database {
 	private Sala sala;
 	private List<Proiezione> proList;
 	private Connection con;
+	private Order order;
 
 	private int port;
 	private String user;
@@ -25,6 +26,7 @@ public class Database {
 	public Database() {
 		sala = new Sala();
 		proList = new ArrayList<Proiezione>();
+		order = new Order();
 	}
 
 	public int getSeat() {
@@ -166,6 +168,47 @@ public class Database {
 		results.close();
 		selectStmt.close();
 
+	}
+	
+	public void addTicket(int numero, Boolean occupato, Boolean intero) {
+		Seat seat = sala.getSeatList().get(numero-1);
+		
+		Ticket ticket = new Ticket(seat);
+		ticket.setId(seat.getNumero());
+		
+		if(seat.getOccupato() == false) {
+			if(occupato == false) {
+				order.getTicketList().remove(seat.getNumero());
+			}
+			else {
+				if(intero) {
+					ticket.setPrice(10);
+				}
+				else {
+					ticket.setPrice(6);
+				}
+				order.getTicketList().put(numero, ticket);
+			}
+		}
+		else {
+			if(occupato == true) {
+				order.getTicketList().remove(seat.getNumero());
+			}
+			else {
+				if(intero) {
+					ticket.setPrice(10);
+				}
+				else {
+					ticket.setPrice(6);
+				}
+				order.getTicketList().put(numero, ticket);
+			}
+		}
+		
+		for(Integer key: order.getTicketList().keySet()) {
+			System.out.println(order.getTicketList().get(key));
+		}
+		
 	}
 
 	/*

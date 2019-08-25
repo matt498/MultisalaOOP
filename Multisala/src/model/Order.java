@@ -1,31 +1,17 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Order {
 
-	private List<Ticket> ticketList;
+	private HashMap<Integer, Ticket> ticketList;
 
 	public Order() {
-		this.ticketList = new ArrayList<Ticket>();
+		this.ticketList = new HashMap<Integer, Ticket>();
 	}
 
-	public Integer totalPrice() {
-		
-		Integer tot = 0;
-		
-		for (Ticket ticket : ticketList) {
-			tot += ticket.getPrice();
-		}
-
-		return tot;
-	}
-
-	public List<Ticket> getTicketList() {
+	public HashMap<Integer, Ticket> getTicketList() {
 		return ticketList;
 	}
-	
-	
-	
+
 }

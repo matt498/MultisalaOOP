@@ -49,5 +49,9 @@ public class Controller {
 	public Sala getSala() {
 		return db.getSala();
 	}
+	
+	public void addTicket(int numero, Boolean occupato, Boolean intero) {
+		db.addTicket(numero, occupato, intero);
+	}
 
 }
