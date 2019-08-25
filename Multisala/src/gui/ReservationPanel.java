@@ -123,11 +123,6 @@ public class ReservationPanel extends JPanel {
 
 		lowerPanel.setLayout(new GridBagLayout());
 
-		// Border innerBorder = BorderFactory.createLoweredSoftBevelBorder();
-		// Border outerBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-		// lowerPanel.setBorder(BorderFactory.createCompoundBorder(outerBorder,
-		// innerBorder));
-
 		GridBagConstraints gc = new GridBagConstraints();
 
 		gc.gridx = 0;
