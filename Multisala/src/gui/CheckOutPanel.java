@@ -22,8 +22,9 @@ public class CheckOutPanel extends JPanel {
 	private JTextField scontoField;
 	private JButton okButton;
 	private JButton cancelButton;
+	private ReservationPanel resPanel;
 	
-	public CheckOutPanel() {
+	public CheckOutPanel(ReservationPanel resPanel) {
 		
 		totLabel = new JLabel("Totale: ");
 		totField = new JTextField(10);
@@ -31,6 +32,15 @@ public class CheckOutPanel extends JPanel {
 		scontoField = new JTextField(10);
 		okButton = new JButton("OK");
 		cancelButton = new JButton("Cancel");
+		this.resPanel = resPanel;
+		
+		this.resPanel.setListener(new RefreshTotale() {
+			
+			@Override
+			public void refreshTot(Integer totale) {
+				totField.setText(totale.toString());
+			}
+		});
 		
 		panelLayout();
 		

@@ -43,6 +43,7 @@ public class ReservationPanel extends JPanel {
 	private JPanel lowerPanel;
 	private Controller controller;
 	private FilmBarPanel filmBarPanel;
+	private RefreshTotale refreshTotale;
 
 	public ReservationPanel(Controller controller, FilmBarPanel filmBarPanel) {
 
@@ -99,6 +100,10 @@ public class ReservationPanel extends JPanel {
 				lowerLayout();
 			}
 		});
+	}
+	
+	public void setListener(RefreshTotale refreshTotale) {
+		this.refreshTotale = refreshTotale;
 	}
 	
 	private void remPosti() {
@@ -206,6 +211,10 @@ public class ReservationPanel extends JPanel {
 	public Boolean getIntero() {
 		return interoButton.isSelected();
 	}
+	
+	public RefreshTotale getListener() {
+		return this.refreshTotale;
+	}
 }
 
 class SeatButton extends JToggleButton {
@@ -226,7 +235,10 @@ class SeatButton extends JToggleButton {
 				Boolean status = isSelected();
 				Boolean intero = resPanel.getIntero();
 				controller.addTicket(numero, status, intero);
-				
+				Integer totale = controller.getTotale();
+				if(resPanel.getListener() != null) {
+					resPanel.getListener().refreshTot(totale);
+				}
 			}
 		});
 	}
