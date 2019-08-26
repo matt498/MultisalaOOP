@@ -96,6 +96,16 @@ public class ReservationPanel extends JPanel {
 					e.printStackTrace();
 				}
 				
+				//imposto il numero di ticket interi
+				
+				try {
+					interiField.setText(new Integer(controller.loadInteri(proEvent)).toString());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 				remPosti();
 				lowerLayout();
 			}

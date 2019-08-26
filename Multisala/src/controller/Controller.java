@@ -61,5 +61,8 @@ public class Controller {
 	public void deleteOrder() {
 		db.deleteOrder();
 	}
-
+	
+	public int loadInteri(ProiezioneEvent proEvent) throws SQLException {
+		return db.loadInteri(proEvent);
+	}
 }
