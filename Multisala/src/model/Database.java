@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import gui.ProiezioneEvent;
 
@@ -85,7 +86,7 @@ public class Database {
 			int price = order.getTicketList().get(ticketId).getPrice();
 			totale += price;
 		}
-		
+
 		return totale;
 
 	}
@@ -179,131 +180,114 @@ public class Database {
 		selectStmt.close();
 
 	}
-	
+
 	public int loadInteri(ProiezioneEvent proEvent) throws SQLException {
-		String sql ="select count(*) as cont from biglietto b\n" + 
-				"join poltrona_in_proiezione p on b.codice=p.codice\n" + 
-				"join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n" + 
-				"where film2.titolo=? and\n" + 
-				"p.data_=current_date() and\n" + 
-				"p.ora=? and\n" + 
-				"p.nome=? and\n" + 
-				"p.username='victoria' and\n" + 
-				"b.sel='intero';";
-		
+		String sql = "select count(*) as cont from biglietto b\n"
+				+ "join poltrona_in_proiezione p on b.codice=p.codice\n"
+				+ "join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n"
+				+ "where film2.titolo=? and\n" + "p.data_=current_date() and\n" + "p.ora=? and\n" + "p.nome=? and\n"
+				+ "p.username='victoria' and\n" + "b.sel='intero';";
+
 		PreparedStatement countInteriStmt = con.prepareStatement(sql);
-		
+
 		countInteriStmt.setString(1, proEvent.getTitolo());
 		countInteriStmt.setString(2, proEvent.getOra());
 		countInteriStmt.setInt(3, proEvent.getNumeroSala());
-		
+
 		ResultSet result = countInteriStmt.executeQuery();
-		
+
 		int num = 0;
 		while (result.next()) {
 			num = result.getInt("cont");
 		}
-		
+
 		result.close();
 		countInteriStmt.close();
-		
+
 		return num;
 	}
-	
+
 	public int loadRidotti(ProiezioneEvent proEvent) throws SQLException {
-		String sql ="select count(*) as cont from biglietto b\n" + 
-				"join poltrona_in_proiezione p on b.codice=p.codice\n" + 
-				"join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n" + 
-				"where film2.titolo=? and\n" + 
-				"p.data_=current_date() and\n" + 
-				"p.ora=? and\n" + 
-				"p.nome=? and\n" + 
-				"p.username='victoria' and\n" + 
-				"b.sel='ridotto'";
-		
+		String sql = "select count(*) as cont from biglietto b\n"
+				+ "join poltrona_in_proiezione p on b.codice=p.codice\n"
+				+ "join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n"
+				+ "where film2.titolo=? and\n" + "p.data_=current_date() and\n" + "p.ora=? and\n" + "p.nome=? and\n"
+				+ "p.username='victoria' and\n" + "b.sel='ridotto'";
+
 		PreparedStatement countRidottiStmt = con.prepareStatement(sql);
-		
+
 		countRidottiStmt.setString(1, proEvent.getTitolo());
 		countRidottiStmt.setString(2, proEvent.getOra());
 		countRidottiStmt.setInt(3, proEvent.getNumeroSala());
-		
+
 		ResultSet result = countRidottiStmt.executeQuery();
-		
+
 		int num = 0;
 		while (result.next()) {
 			num = result.getInt("cont");
 		}
-		
+
 		result.close();
 		countRidottiStmt.close();
-		
+
 		return num;
-		
+
 	}
-	
+
 	public int loadPrenotati(ProiezioneEvent proEvent) throws SQLException {
-		String sql ="select count(*) as cont \n" + 
-				"from poltrona_in_proiezione p\n" + 
-				"join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n" + 
-				"where film2.titolo=? and\n" + 
-				"p.data_=current_date() and\n" + 
-				"p.ora=? and\n" + 
-				"p.nome=? and\n" + 
-				"p.username='victoria' and \n" + 
-				"p.codice is null\n" + 
-				"group by p.id,p.data_,p.ora,p.nome,p.username,p.codice";
-		
+		String sql = "select count(*) as cont \n" + "from poltrona_in_proiezione p\n"
+				+ "join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n"
+				+ "where film2.titolo=? and\n" + "p.data_=current_date() and\n" + "p.ora=? and\n" + "p.nome=? and\n"
+				+ "p.username='victoria' and \n" + "p.codice is null\n"
+				+ "group by p.id,p.data_,p.ora,p.nome,p.username,p.codice";
+
 		PreparedStatement countPrenotatiStmt = con.prepareStatement(sql);
-		
+
 		countPrenotatiStmt.setString(1, proEvent.getTitolo());
 		countPrenotatiStmt.setString(2, proEvent.getOra());
 		countPrenotatiStmt.setInt(3, proEvent.getNumeroSala());
-		
+
 		ResultSet result = countPrenotatiStmt.executeQuery();
-		
+
 		int num = 0;
 		while (result.next()) {
 			num = result.getInt("cont");
 		}
-		
+
 		result.close();
 		countPrenotatiStmt.close();
-		
+
 		return num;
-		
+
 	}
-	
+
 	public int loadCapienza(ProiezioneEvent proEvent) throws SQLException {
-		String sql ="select count(*) as cont\n" + 
-				"from poltrona p1\n" + 
-				"where p1.nome=? and\n" + 
-				"p1.username='victoria'\n" + 
-				"and p1.numero not in (	select numero from poltrona_in_proiezione p\n" + 
-				"						join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n" + 
-				"						where film2.titolo=? and\n" + 
-				"                        p.username='victoria' and\n" + 
-				"                        p.data_=current_date() and\n" + 
-				"                        p.ora=?)\n" + 
-				"group by p1.nome, p1.username;";
-		
+		String sql = "select count(*) as cont\n" + "from poltrona p1\n" + "where p1.nome=? and\n"
+				+ "p1.username='victoria'\n" + "and p1.numero not in (	select numero from poltrona_in_proiezione p\n"
+				+ "						join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n"
+				+ "						where film2.titolo=? and\n"
+				+ "                        p.username='victoria' and\n"
+				+ "                        p.data_=current_date() and\n" + "                        p.ora=?)\n"
+				+ "group by p1.nome, p1.username;";
+
 		PreparedStatement countPrenotatiStmt = con.prepareStatement(sql);
-		
+
 		countPrenotatiStmt.setInt(1, proEvent.getNumeroSala());
 		countPrenotatiStmt.setString(2, proEvent.getTitolo());
 		countPrenotatiStmt.setString(3, proEvent.getOra());
-		
+
 		ResultSet result = countPrenotatiStmt.executeQuery();
-		
+
 		int num = 0;
 		while (result.next()) {
 			num = result.getInt("cont");
 		}
-		
+
 		result.close();
 		countPrenotatiStmt.close();
-		
+
 		return num;
-		
+
 	}
 
 	public void addTicket(int numero, Boolean occupato, Boolean intero) {
@@ -336,7 +320,50 @@ public class Database {
 			}
 		}
 	}
+
+	public void checkOutTickets(ProiezioneEvent proEvent) throws SQLException {
+		Set<Integer> ticketKeySet = order.getTicketList().keySet();
+
+		String sql = "insert into biglietto (data, prezzo, sel) values (current_date(),?,?)";
+		PreparedStatement insertStmt = con.prepareStatement(sql);
+		
+		String sql2 = "insert into poltrona_in_proiezione (id, data_,ora,nome,username,numero)values (\n" + 
+				"(select id from film where titolo=? limit 1), \n" + 
+				"current_date(),\n" + 
+				"?,\n" + 
+				"?,\n" + 
+				"'victoria',\n" + 
+				"?);";
+		PreparedStatement insertPoltronaStmt = con.prepareStatement(sql2);
+		insertPoltronaStmt.setString(1, proEvent.getTitolo());
+		insertPoltronaStmt.setString(2, proEvent.getOra());
+		insertPoltronaStmt.setInt(3, proEvent.getNumeroSala());
 	
+
+		for (Integer key : ticketKeySet) {
+			Ticket ticket = order.getTicketList().get(key);
+
+			insertStmt.setInt(1, ticket.getPrice());
+			if (ticket.getPrice() == 10)
+				insertStmt.setString(2, "intero");
+			else
+				insertStmt.setString(2, "ridotto");
+			
+			insertStmt.executeUpdate();
+			
+			insertPoltronaStmt.setInt(4, ticket.getSeat().getNumero());
+			insertPoltronaStmt.executeUpdate();
+			
+		}
+		
+		insertStmt.close();
+		insertPoltronaStmt.close();
+		
+		order.getTicketList().clear();
+		loadSala(proEvent);
+		
+	}
+
 	public void deleteOrder() {
 		this.order.getTicketList().clear();
 	}

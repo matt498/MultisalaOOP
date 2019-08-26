@@ -77,4 +77,8 @@ public class Controller {
 	public int loadCapienza(ProiezioneEvent proEvent) throws SQLException {
 		return db.loadCapienza(proEvent);
 	}
+	
+	public void checkOutTickets(ProiezioneEvent proEvent) throws SQLException {
+		db.checkOutTickets(proEvent);
+	}
 }

@@ -44,6 +44,7 @@ public class ReservationPanel extends JPanel {
 	private Controller controller;
 	private FilmBarPanel filmBarPanel;
 	private RefreshTotale refreshTotale;
+	private ProiezioneEvent proEvent;
 
 	public ReservationPanel(Controller controller, FilmBarPanel filmBarPanel) {
 
@@ -89,7 +90,7 @@ public class ReservationPanel extends JPanel {
 			@Override
 			public void salaActionPerformed(ProiezioneEvent proEvent) {
 				System.out.println(proEvent.getNumeroSala());
-
+				ReservationPanel.this.proEvent = proEvent;
 				try {
 					controller.loadSala(proEvent);
 				} catch (SQLException e) {
@@ -126,6 +127,10 @@ public class ReservationPanel extends JPanel {
 				lowerLayout();
 			}
 		});
+	}
+	
+	public ProiezioneEvent getProEvent() {
+		return proEvent;
 	}
 	
 	public void setListener(RefreshTotale refreshTotale) {

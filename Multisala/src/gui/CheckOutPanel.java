@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -56,12 +57,48 @@ public class CheckOutPanel extends JPanel {
 			}
 		});
 		
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controller.checkOutTickets(getResPanel().getProEvent());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//aggiorno tutta la view
+				
+				totField.setText(new Integer(0).toString());
+				getResPanel().remPosti();
+				getResPanel().lowerLayout();
+				
+				try {
+					controller.loadSala(getResPanel().getProEvent());
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+				
+				try {
+					controller.loadInteri(getResPanel().getProEvent());
+					controller.loadRidotti(getResPanel().getProEvent());
+					controller.loadPrenotati(getResPanel().getProEvent());
+					controller.loadCapienza(getResPanel().getProEvent());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		panelLayout();
 		
 		Border innerBorder = BorderFactory.createTitledBorder("CheckOut");
 		Border outerBorder = BorderFactory.createEmptyBorder(0, 10, 0, 0);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 		
+	}
+	
+	private ReservationPanel getResPanel() {
+		return this.resPanel;
 	}
 
 	private void panelLayout() {
