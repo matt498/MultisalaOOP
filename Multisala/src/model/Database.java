@@ -201,10 +201,44 @@ public class Database {
 		
 		int num = 0;
 		while (result.next()) {
-			num = result.findColumn("cont");
+			num = result.getInt("cont");
 		}
 		
+		result.close();
+		countInteriStmt.close();
+		
 		return num;
+	}
+	
+	public int loadRidotti(ProiezioneEvent proEvent) throws SQLException {
+		String sql ="select count(*) as cont from biglietto b\n" + 
+				"join poltrona_in_proiezione p on b.codice=p.codice\n" + 
+				"join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n" + 
+				"where film2.titolo=? and\n" + 
+				"p.data_=current_date() and\n" + 
+				"p.ora=? and\n" + 
+				"p.nome=? and\n" + 
+				"p.username='victoria' and\n" + 
+				"b.sel='ridotto';";
+		
+		PreparedStatement countRidottiStmt = con.prepareStatement(sql);
+		
+		countRidottiStmt.setString(1, proEvent.getTitolo());
+		countRidottiStmt.setString(2, proEvent.getOra());
+		countRidottiStmt.setInt(3, proEvent.getNumeroSala());
+		
+		ResultSet result = countRidottiStmt.executeQuery();
+		
+		int num = 0;
+		while (result.next()) {
+			num = result.getInt("cont");
+		}
+		
+		result.close();
+		countRidottiStmt.close();
+		
+		return num;
+		
 	}
 
 	public void addTicket(int numero, Boolean occupato, Boolean intero) {

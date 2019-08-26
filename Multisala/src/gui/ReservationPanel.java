@@ -105,6 +105,12 @@ public class ReservationPanel extends JPanel {
 					e.printStackTrace();
 				}
 				
+				try {
+					ridottiField.setText(new Integer(controller.loadRidotti(proEvent)).toString());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				remPosti();
 				lowerLayout();

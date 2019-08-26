@@ -65,4 +65,8 @@ public class Controller {
 	public int loadInteri(ProiezioneEvent proEvent) throws SQLException {
 		return db.loadInteri(proEvent);
 	}
+	
+	public int loadRidotti(ProiezioneEvent proEvent) throws SQLException {
+		return db.loadRidotti(proEvent);
+	}
 }
