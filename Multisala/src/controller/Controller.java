@@ -69,4 +69,12 @@ public class Controller {
 	public int loadRidotti(ProiezioneEvent proEvent) throws SQLException {
 		return db.loadRidotti(proEvent);
 	}
+	
+	public int loadPrenotati(ProiezioneEvent proEvent) throws SQLException {
+		return db.loadPrenotati(proEvent);
+	}
+	
+	public int loadCapienza(ProiezioneEvent proEvent) throws SQLException {
+		return db.loadCapienza(proEvent);
+	}
 }

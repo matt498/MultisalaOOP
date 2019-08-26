@@ -51,6 +51,7 @@ public class CheckOutPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				totField.setText(new Integer(0).toString());
 				controller.deleteOrder();
+				resPanel.remPosti();
 				resPanel.lowerLayout();
 			}
 		});

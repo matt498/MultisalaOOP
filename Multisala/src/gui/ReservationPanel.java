@@ -96,19 +96,29 @@ public class ReservationPanel extends JPanel {
 					e.printStackTrace();
 				}
 				
-				//imposto il numero di ticket interi
 				
+				//setto il conteggio degli interi
 				try {
 					interiField.setText(new Integer(controller.loadInteri(proEvent)).toString());
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				//setto il conteggio dei ridotti
 				try {
 					ridottiField.setText(new Integer(controller.loadRidotti(proEvent)).toString());
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//setto il conteggio dei prenotati
+				try {
+					prenotatiField.setText(new Integer(controller.loadPrenotati(proEvent)).toString());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				//setto capienza
+				try {
+					capienzaField.setText(new Integer(controller.loadCapienza(proEvent)).toString());
+				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 				
@@ -122,7 +132,7 @@ public class ReservationPanel extends JPanel {
 		this.refreshTotale = refreshTotale;
 	}
 	
-	private void remPosti() {
+	public void remPosti() {
 		//Get the components in the panel
 		Component[] componentList = lowerPanel.getComponents();
 

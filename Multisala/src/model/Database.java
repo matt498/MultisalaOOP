@@ -219,7 +219,7 @@ public class Database {
 				"p.ora=? and\n" + 
 				"p.nome=? and\n" + 
 				"p.username='victoria' and\n" + 
-				"b.sel='ridotto';";
+				"b.sel='ridotto'";
 		
 		PreparedStatement countRidottiStmt = con.prepareStatement(sql);
 		
@@ -236,6 +236,71 @@ public class Database {
 		
 		result.close();
 		countRidottiStmt.close();
+		
+		return num;
+		
+	}
+	
+	public int loadPrenotati(ProiezioneEvent proEvent) throws SQLException {
+		String sql ="select count(*) as cont \n" + 
+				"from poltrona_in_proiezione p\n" + 
+				"join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n" + 
+				"where film2.titolo=? and\n" + 
+				"p.data_=current_date() and\n" + 
+				"p.ora=? and\n" + 
+				"p.nome=? and\n" + 
+				"p.username='victoria' and \n" + 
+				"p.codice is null\n" + 
+				"group by p.id,p.data_,p.ora,p.nome,p.username,p.codice";
+		
+		PreparedStatement countPrenotatiStmt = con.prepareStatement(sql);
+		
+		countPrenotatiStmt.setString(1, proEvent.getTitolo());
+		countPrenotatiStmt.setString(2, proEvent.getOra());
+		countPrenotatiStmt.setInt(3, proEvent.getNumeroSala());
+		
+		ResultSet result = countPrenotatiStmt.executeQuery();
+		
+		int num = 0;
+		while (result.next()) {
+			num = result.getInt("cont");
+		}
+		
+		result.close();
+		countPrenotatiStmt.close();
+		
+		return num;
+		
+	}
+	
+	public int loadCapienza(ProiezioneEvent proEvent) throws SQLException {
+		String sql ="select count(*) as cont\n" + 
+				"from poltrona p1\n" + 
+				"where p1.nome=? and\n" + 
+				"p1.username='victoria'\n" + 
+				"and p1.numero not in (	select numero from poltrona_in_proiezione p\n" + 
+				"						join (select f.id, f.titolo as titolo from film f) as film2 on film2.id=p.id\n" + 
+				"						where film2.titolo=? and\n" + 
+				"                        p.username='victoria' and\n" + 
+				"                        p.data_=current_date() and\n" + 
+				"                        p.ora=?)\n" + 
+				"group by p1.nome, p1.username;";
+		
+		PreparedStatement countPrenotatiStmt = con.prepareStatement(sql);
+		
+		countPrenotatiStmt.setInt(1, proEvent.getNumeroSala());
+		countPrenotatiStmt.setString(2, proEvent.getTitolo());
+		countPrenotatiStmt.setString(3, proEvent.getOra());
+		
+		ResultSet result = countPrenotatiStmt.executeQuery();
+		
+		int num = 0;
+		while (result.next()) {
+			num = result.getInt("cont");
+		}
+		
+		result.close();
+		countPrenotatiStmt.close();
 		
 		return num;
 		
