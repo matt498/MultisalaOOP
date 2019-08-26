@@ -209,11 +209,6 @@ public class Database {
 				order.getTicketList().put(numero, ticket);
 			}
 		}
-
-		for (Integer key : order.getTicketList().keySet()) {
-			System.out.println(order.getTicketList().get(key));
-		}
-
 	}
 	
 	public void deleteOrder() {
