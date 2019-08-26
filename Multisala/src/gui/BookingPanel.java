@@ -19,7 +19,7 @@ public class BookingPanel extends JPanel {
 
 		filmBarPanel = new FilmBarPanel(controller);
 		reservationPanel = new ReservationPanel(controller, this.filmBarPanel);
-		checkOutPanel = new CheckOutPanel();
+		checkOutPanel = new CheckOutPanel(reservationPanel, controller);
 		
 		add(filmBarPanel, BorderLayout.NORTH);
 		add(reservationPanel, BorderLayout.CENTER);

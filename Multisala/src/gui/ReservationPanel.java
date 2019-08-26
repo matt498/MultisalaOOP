@@ -43,6 +43,8 @@ public class ReservationPanel extends JPanel {
 	private JPanel lowerPanel;
 	private Controller controller;
 	private FilmBarPanel filmBarPanel;
+	private RefreshTotale refreshTotale;
+	private ProiezioneEvent proEvent;
 
 	public ReservationPanel(Controller controller, FilmBarPanel filmBarPanel) {
 
@@ -88,9 +90,35 @@ public class ReservationPanel extends JPanel {
 			@Override
 			public void salaActionPerformed(ProiezioneEvent proEvent) {
 				System.out.println(proEvent.getNumeroSala());
-
+				ReservationPanel.this.proEvent = proEvent;
 				try {
 					controller.loadSala(proEvent);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				
+				//setto il conteggio degli interi
+				try {
+					interiField.setText(new Integer(controller.loadInteri(proEvent)).toString());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				//setto il conteggio dei ridotti
+				try {
+					ridottiField.setText(new Integer(controller.loadRidotti(proEvent)).toString());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				//setto il conteggio dei prenotati
+				try {
+					prenotatiField.setText(new Integer(controller.loadPrenotati(proEvent)).toString());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				//setto capienza
+				try {
+					capienzaField.setText(new Integer(controller.loadCapienza(proEvent)).toString());
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -101,7 +129,40 @@ public class ReservationPanel extends JPanel {
 		});
 	}
 	
-	private void remPosti() {
+	
+	public JTextField getInteriField() {
+		return interiField;
+	}
+
+
+	public JTextField getRidottiField() {
+		return ridottiField;
+	}
+
+
+	public JTextField getPrenotatiField() {
+		return prenotatiField;
+	}
+
+
+	public JTextField getCapienzaField() {
+		return capienzaField;
+	}
+
+
+	public FilmBarPanel getFilmBar() {
+		return filmBarPanel;
+	}
+	
+	public ProiezioneEvent getProEvent() {
+		return proEvent;
+	}
+	
+	public void setListener(RefreshTotale refreshTotale) {
+		this.refreshTotale = refreshTotale;
+	}
+	
+	public void remPosti() {
 		//Get the components in the panel
 		Component[] componentList = lowerPanel.getComponents();
 
@@ -117,16 +178,11 @@ public class ReservationPanel extends JPanel {
 		}
 	}
 
-	private void lowerLayout() {
+	public void lowerLayout() {
 
 		Sala sala = controller.getSala();
 
 		lowerPanel.setLayout(new GridBagLayout());
-
-		// Border innerBorder = BorderFactory.createLoweredSoftBevelBorder();
-		// Border outerBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-		// lowerPanel.setBorder(BorderFactory.createCompoundBorder(outerBorder,
-		// innerBorder));
 
 		GridBagConstraints gc = new GridBagConstraints();
 
@@ -211,6 +267,10 @@ public class ReservationPanel extends JPanel {
 	public Boolean getIntero() {
 		return interoButton.isSelected();
 	}
+	
+	public RefreshTotale getListener() {
+		return this.refreshTotale;
+	}
 }
 
 class SeatButton extends JToggleButton {
@@ -231,6 +291,10 @@ class SeatButton extends JToggleButton {
 				Boolean status = isSelected();
 				Boolean intero = resPanel.getIntero();
 				controller.addTicket(numero, status, intero);
+				Integer totale = controller.getTotale();
+				if(resPanel.getListener() != null) {
+					resPanel.getListener().refreshTot(totale);
+				}
 			}
 		});
 	}

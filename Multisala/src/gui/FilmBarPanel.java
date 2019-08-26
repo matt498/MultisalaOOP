@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import controller.Controller;
 
@@ -102,6 +103,11 @@ public class FilmBarPanel extends JPanel {
 		add(salaLabel);
 		add(salaCombo);
 
+	}
+	
+	public void reFreshPanel() {
+		this.revalidate();
+		this.repaint();
 	}
 
 	public void setSalaListener(SalaListener salaListener) {

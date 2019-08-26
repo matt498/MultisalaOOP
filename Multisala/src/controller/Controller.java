@@ -53,5 +53,32 @@ public class Controller {
 	public void addTicket(int numero, Boolean occupato, Boolean intero) {
 		db.addTicket(numero, occupato, intero);
 	}
-
+	
+	public int getTotale() {
+		return db.getTotale();
+	}
+	
+	public void deleteOrder() {
+		db.deleteOrder();
+	}
+	
+	public int loadInteri(ProiezioneEvent proEvent) throws SQLException {
+		return db.loadInteri(proEvent);
+	}
+	
+	public int loadRidotti(ProiezioneEvent proEvent) throws SQLException {
+		return db.loadRidotti(proEvent);
+	}
+	
+	public int loadPrenotati(ProiezioneEvent proEvent) throws SQLException {
+		return db.loadPrenotati(proEvent);
+	}
+	
+	public int loadCapienza(ProiezioneEvent proEvent) throws SQLException {
+		return db.loadCapienza(proEvent);
+	}
+	
+	public void checkOutTickets(ProiezioneEvent proEvent) throws SQLException {
+		db.checkOutTickets(proEvent);
+	}
 }
