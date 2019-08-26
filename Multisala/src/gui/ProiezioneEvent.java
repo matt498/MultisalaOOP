@@ -31,6 +31,11 @@ public class ProiezioneEvent {
 	public void setNumeroSala(int numeroSala) {
 		this.numeroSala = numeroSala;
 	}
+
+	@Override
+	public String toString() {
+		return "ProiezioneEvent [titolo=" + titolo + ", ora=" + ora + ", numeroSala=" + numeroSala + "]";
+	}
 	
 	
 }

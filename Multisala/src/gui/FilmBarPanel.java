@@ -104,6 +104,11 @@ public class FilmBarPanel extends JPanel {
 		add(salaCombo);
 
 	}
+	
+	public void reFreshPanel() {
+		this.revalidate();
+		this.repaint();
+	}
 
 	public void setSalaListener(SalaListener salaListener) {
 		this.salaListener = salaListener;

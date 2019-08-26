@@ -151,9 +151,6 @@ public class Database {
 		results.close();
 		checkStmt.close();
 
-		for (Seat seat : sala.getSeatList()) {
-			System.out.println(seat.getNumero() + " " + seat.getOccupato());
-		}
 	}
 
 	public void loadProiezioni() throws SQLException {
@@ -327,13 +324,18 @@ public class Database {
 		String sql = "insert into biglietto (data, prezzo, sel) values (current_date(),?,?)";
 		PreparedStatement insertStmt = con.prepareStatement(sql);
 		
-		String sql2 = "insert into poltrona_in_proiezione (id, data_,ora,nome,username,numero)values (\n" + 
+		String sql3 = "select codice from biglietto order by codice desc limit 1";
+		PreparedStatement codiceStmt = con.prepareStatement(sql3);
+		
+		String sql2 = "insert into poltrona_in_proiezione (id, data_,ora,nome,username,numero, codice)values (\n" + 
 				"(select id from film where titolo=? limit 1), \n" + 
 				"current_date(),\n" + 
 				"?,\n" + 
 				"?,\n" + 
 				"'victoria',\n" + 
-				"?);";
+				"?,\n" +
+				"?\n" +
+				");";
 		PreparedStatement insertPoltronaStmt = con.prepareStatement(sql2);
 		insertPoltronaStmt.setString(1, proEvent.getTitolo());
 		insertPoltronaStmt.setString(2, proEvent.getOra());
@@ -349,13 +351,20 @@ public class Database {
 			else
 				insertStmt.setString(2, "ridotto");
 			
+			ResultSet result = codiceStmt.executeQuery();
+			
 			insertStmt.executeUpdate();
 			
+			int codice = 0;
+			while(result.next()) {
+				codice = result.getInt(1);
+			}
 			insertPoltronaStmt.setInt(4, ticket.getSeat().getNumero());
+			insertPoltronaStmt.setInt(5, codice);
 			insertPoltronaStmt.executeUpdate();
 			
 		}
-		
+		codiceStmt.close();
 		insertStmt.close();
 		insertPoltronaStmt.close();
 		

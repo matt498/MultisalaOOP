@@ -129,6 +129,31 @@ public class ReservationPanel extends JPanel {
 		});
 	}
 	
+	
+	public JTextField getInteriField() {
+		return interiField;
+	}
+
+
+	public JTextField getRidottiField() {
+		return ridottiField;
+	}
+
+
+	public JTextField getPrenotatiField() {
+		return prenotatiField;
+	}
+
+
+	public JTextField getCapienzaField() {
+		return capienzaField;
+	}
+
+
+	public FilmBarPanel getFilmBar() {
+		return filmBarPanel;
+	}
+	
 	public ProiezioneEvent getProEvent() {
 		return proEvent;
 	}
