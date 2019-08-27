@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import controller.Controller;
 
@@ -29,6 +31,8 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		super("Multisala");
+		
+		UIManager.put("ToggleButton.disabledText", Color.RED);
 
 		controller = new Controller();
 		bookingPanel = new BookingPanel(controller);
