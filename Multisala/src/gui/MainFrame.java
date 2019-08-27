@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
 
 	private BookingPanel bookingPanel;
 	private Controller controller;
+	private ToolBar toolBar;
 	
 	public MainFrame() {
 		super("Multisala");
@@ -38,12 +39,14 @@ public class MainFrame extends JFrame {
 		UIManager.put("ToggleButton.disabledText", Color.RED);
 
 		controller = new Controller();
-		bookingPanel = new BookingPanel(controller);
+		bookingPanel = new BookingPanel(controller, toolBar);
+		toolBar = new ToolBar(this, controller, bookingPanel.getResPanel());
 
 		setLayout(new BorderLayout());
 
 		setJMenuBar(createMenuBar());
 
+		add(toolBar, BorderLayout.NORTH);
 		add(bookingPanel, BorderLayout.CENTER);
 		
 		addWindowListener(new WindowAdapter() {

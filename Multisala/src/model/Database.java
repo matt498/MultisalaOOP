@@ -19,6 +19,7 @@ public class Database {
 	private List<Proiezione> proList;
 	private Connection con;
 	private Order order;
+	private List<PoltronaInProiezione> poltronaList;
 
 	private int port;
 	private String user;
@@ -28,6 +29,7 @@ public class Database {
 		sala = new Sala();
 		proList = new ArrayList<Proiezione>();
 		order = new Order();
+		poltronaList = new ArrayList<PoltronaInProiezione>();
 	}
 
 	public int getSeat() {
@@ -323,24 +325,17 @@ public class Database {
 
 		String sql = "insert into biglietto (data, prezzo, sel) values (current_date(),?,?)";
 		PreparedStatement insertStmt = con.prepareStatement(sql);
-		
+
 		String sql3 = "select codice from biglietto order by codice desc limit 1";
 		PreparedStatement codiceStmt = con.prepareStatement(sql3);
-		
-		String sql2 = "insert into poltrona_in_proiezione (id, data_,ora,nome,username,numero, codice)values (\n" + 
-				"(select id from film where titolo=? limit 1), \n" + 
-				"current_date(),\n" + 
-				"?,\n" + 
-				"?,\n" + 
-				"'victoria',\n" + 
-				"?,\n" +
-				"?\n" +
-				");";
+
+		String sql2 = "insert into poltrona_in_proiezione (id, data_,ora,nome,username,numero, codice)values (\n"
+				+ "(select id from film where titolo=? limit 1), \n" + "current_date(),\n" + "?,\n" + "?,\n"
+				+ "'victoria',\n" + "?,\n" + "?\n" + ");";
 		PreparedStatement insertPoltronaStmt = con.prepareStatement(sql2);
 		insertPoltronaStmt.setString(1, proEvent.getTitolo());
 		insertPoltronaStmt.setString(2, proEvent.getOra());
 		insertPoltronaStmt.setInt(3, proEvent.getNumeroSala());
-	
 
 		for (Integer key : ticketKeySet) {
 			Ticket ticket = order.getTicketList().get(key);
@@ -350,32 +345,63 @@ public class Database {
 				insertStmt.setString(2, "intero");
 			else
 				insertStmt.setString(2, "ridotto");
-			
+
 			ResultSet result = codiceStmt.executeQuery();
-			
+
 			insertStmt.executeUpdate();
-			
+
 			int codice = 0;
-			while(result.next()) {
+			while (result.next()) {
 				codice = result.getInt(1);
 			}
 			insertPoltronaStmt.setInt(4, ticket.getSeat().getNumero());
 			insertPoltronaStmt.setInt(5, codice);
 			insertPoltronaStmt.executeUpdate();
-			
+
 		}
 		codiceStmt.close();
 		insertStmt.close();
 		insertPoltronaStmt.close();
-		
+
 		order.getTicketList().clear();
 		loadSala(proEvent);
-		
+
 	}
 
 	public void deleteOrder() {
 		this.order.getTicketList().clear();
 	}
+
+	public void loadPoltroneProiezione(ProiezioneEvent proEvent) throws SQLException {
+		poltronaList.clear();
+
+		String sql = "select p.numero, p.codice, f.titolo, p.ora, p.nome\n" + 
+				"from poltrona_in_proiezione p\n" + 
+				"join film f on f.id=p.id\n" + 
+				"where p.data_=current_date() and\n" + 
+				"p.ora=? and\n" + 
+				"p.nome=? and\n" + 
+				"f.titolo=? and\n" + 
+				"p.username='victoria'";
+
+		PreparedStatement checkPoltrona = con.prepareStatement(sql);
+
+		checkPoltrona.setString(1, proEvent.getOra());
+		checkPoltrona.setString(3, proEvent.getTitolo());
+		checkPoltrona.setInt(2, proEvent.getNumeroSala());
+		
+		ResultSet result = checkPoltrona.executeQuery();
+		while (result.next()) {
+			poltronaList.add(new PoltronaInProiezione(result.getInt(1), result.getInt(2), result.getString(3),
+					result.getString(4), result.getInt(5)));
+		}
+		
+		checkPoltrona.close();
+		result.close();
+
+	}
+	
+	
 
 	/*
 	 * public void insertPoltrone() throws Exception { connect();
@@ -388,8 +414,42 @@ public class Database {
 	 * insertStmt.close(); con.close(); disconnect(); }
 	 */
 
+	public List<PoltronaInProiezione> getPoltronaList() {
+		return poltronaList;
+	}
+
 	public List<Proiezione> getProiezione() {
 		return this.proList;
+	}
+
+	public void deletePosto(int codice, ProiezioneEvent proEvent) throws SQLException {
+		
+		String sql2 = "select id from film where titolo=?";
+		PreparedStatement idStmt = con.prepareStatement(sql2);
+		idStmt.setString(1, proEvent.getTitolo());
+		ResultSet result = idStmt.executeQuery();
+		result.next();
+		
+		String sql = "delete from poltrona_in_proiezione\n" +  
+				"where id=? and\n" + 
+				"data_=current_date() and\n" + 
+				"ora=? and\n" + 
+				"nome=? and\n" + 
+				"username='victoria' and\n" + 
+				"codice=?";
+		
+		PreparedStatement deleteStmt = con.prepareStatement(sql);
+		
+		deleteStmt.setInt(1, result.getInt(1));
+		deleteStmt.setString(2, proEvent.getOra());
+		deleteStmt.setInt(3, proEvent.getNumeroSala());
+		deleteStmt.setInt(4, codice);
+		
+		deleteStmt.executeUpdate();
+		
+		deleteStmt.close();
+		loadSala(proEvent);
+		loadPoltroneProiezione(proEvent);
 	}
 
 }
