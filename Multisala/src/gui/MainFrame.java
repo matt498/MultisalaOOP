@@ -39,8 +39,8 @@ public class MainFrame extends JFrame {
 		UIManager.put("ToggleButton.disabledText", Color.RED);
 
 		controller = new Controller();
-		bookingPanel = new BookingPanel(controller);
-		toolBar = new ToolBar();
+		bookingPanel = new BookingPanel(controller, toolBar);
+		toolBar = new ToolBar(this, controller);
 
 		setLayout(new BorderLayout());
 

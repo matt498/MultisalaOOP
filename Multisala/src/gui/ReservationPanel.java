@@ -49,7 +49,7 @@ public class ReservationPanel extends JPanel {
 	private ProiezioneEvent proEvent;
 	private Boolean intero;
 
-	public ReservationPanel(Controller controller, FilmBarPanel filmBarPanel) {
+	public ReservationPanel(Controller controller, FilmBarPanel filmBarPanel, ToolBar toolBar) {
 
 		setLayout(new BorderLayout());
 
@@ -120,6 +120,12 @@ public class ReservationPanel extends JPanel {
 					e.printStackTrace();
 				}
 				
+				try {
+					controller.loadPoltroneProiezione(proEvent);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				//setto il conteggio degli interi
 				try {

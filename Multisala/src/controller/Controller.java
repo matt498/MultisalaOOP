@@ -5,6 +5,7 @@ import java.util.List;
 
 import gui.ProiezioneEvent;
 import model.Database;
+import model.PoltronaInProiezione;
 import model.Proiezione;
 import model.Sala;
 import model.Seat;
@@ -80,5 +81,13 @@ public class Controller {
 	
 	public void checkOutTickets(ProiezioneEvent proEvent) throws SQLException {
 		db.checkOutTickets(proEvent);
+	}
+	
+	public List<PoltronaInProiezione> getPoltronaList() {
+		return db.getPoltronaList();
+	}
+	
+	public void loadPoltroneProiezione(ProiezioneEvent proEvent) throws SQLException {
+		db.loadPoltroneProiezione(proEvent);
 	}
 }

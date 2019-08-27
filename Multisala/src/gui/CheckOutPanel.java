@@ -86,6 +86,13 @@ public class CheckOutPanel extends JPanel {
 				}
 
 				getResPanel().getFilmBar().reFreshPanel();
+				
+				try {
+					controller.loadPoltroneProiezione(getResPanel().getProEvent());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 

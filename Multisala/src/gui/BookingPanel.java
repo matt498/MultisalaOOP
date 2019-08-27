@@ -13,12 +13,12 @@ public class BookingPanel extends JPanel {
 	private ReservationPanel reservationPanel;
 	private CheckOutPanel checkOutPanel;
 
-	public BookingPanel(Controller controller) {
+	public BookingPanel(Controller controller, ToolBar toolBar) {
 
 		setLayout(new BorderLayout());
 
 		filmBarPanel = new FilmBarPanel(controller);
-		reservationPanel = new ReservationPanel(controller, this.filmBarPanel);
+		reservationPanel = new ReservationPanel(controller, this.filmBarPanel, toolBar);
 		checkOutPanel = new CheckOutPanel(reservationPanel, controller);
 		
 		add(filmBarPanel, BorderLayout.NORTH);
