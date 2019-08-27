@@ -60,6 +60,10 @@ public class CheckOutPanel extends JPanel {
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				if(getResPanel().getProEvent() == null) {
+					return;
+				}
 				try {
 					controller.checkOutTickets(getResPanel().getProEvent());
 				} catch (SQLException e1) {
