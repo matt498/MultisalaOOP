@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
 
 	private BookingPanel bookingPanel;
 	private Controller controller;
+	private ToolBar toolBar;
 	
 	public MainFrame() {
 		super("Multisala");
@@ -39,11 +40,13 @@ public class MainFrame extends JFrame {
 
 		controller = new Controller();
 		bookingPanel = new BookingPanel(controller);
+		toolBar = new ToolBar();
 
 		setLayout(new BorderLayout());
 
 		setJMenuBar(createMenuBar());
 
+		add(toolBar, BorderLayout.NORTH);
 		add(bookingPanel, BorderLayout.CENTER);
 		
 		addWindowListener(new WindowAdapter() {
