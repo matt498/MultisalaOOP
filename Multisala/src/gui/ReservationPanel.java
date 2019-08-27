@@ -74,7 +74,7 @@ public class ReservationPanel extends JPanel {
 		ridottoButton.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange() == ItemEvent.DESELECTED) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
 					intero = false;
 				}
 			}
