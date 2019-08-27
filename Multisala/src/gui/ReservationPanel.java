@@ -199,7 +199,7 @@ public class ReservationPanel extends JPanel {
 		for(Component c : componentList){
 
 		    //Find the components you want to remove
-		    if(c instanceof SeatButton){
+		    if(c instanceof SeatButton  || c instanceof JLabel){
 
 		        //Remove it
 		        this.lowerPanel.remove(c);
@@ -221,12 +221,26 @@ public class ReservationPanel extends JPanel {
 		if (sala.getId() == 1 || sala.getId()== 2) {
 
 			int cont = 0;
-			for (int i = 0; i < 6; i++) {
-				for (int j = 0; j < 25; j++, cont++) {
+			char x='A';
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 15; j++, cont++) {
+					
+					if(j == 0) {
+						lowerPanel.add(new JLabel(String.format("%c:", x)), gc);
+						gc.gridx++;
+						x++;
+					}
+					
 					Seat seat = sala.getSeatList().get(cont);
 					SeatButton seatButton = new SeatButton(seat.getNumero(), seat.getOccupato(), this, this.controller); // mettere a posto
 																									// l'indice
 					seatButton.setEnabled(!(seat.getOccupato()));
+					if(seat.getOccupato()) {
+						seatButton.setIcon(Utils.createImage("/images/icons8-person-20.png"));
+					}
+					else {
+						seatButton.setIcon(Utils.createImage("/images/icons8-filled-circle-20.png"));
+					}
 					lowerPanel.add(seatButton, gc);
 					gc.gridx++;
 				}
