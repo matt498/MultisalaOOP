@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +47,7 @@ public class ReservationPanel extends JPanel {
 	private FilmBarPanel filmBarPanel;
 	private RefreshTotale refreshTotale;
 	private ProiezioneEvent proEvent;
+	private Boolean intero;
 
 	public ReservationPanel(Controller controller, FilmBarPanel filmBarPanel) {
 
@@ -52,10 +55,30 @@ public class ReservationPanel extends JPanel {
 
 		this.controller = controller;
 		this.filmBarPanel = filmBarPanel;
+		
+		intero = new Boolean(true);
 
 		interoButton = new JToggleButton("INTERO");
 		ridottoButton = new JToggleButton("RIDOTTO");
 		bigliettoGroup = new ButtonGroup();
+		
+		interoButton.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					intero = true;
+				}
+			}
+		});
+		
+		ridottoButton.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.DESELECTED) {
+					intero = false;
+				}
+			}
+		});
 
 		interiLabel = new JLabel("Interi: ");
 		ridottiLabel = new JLabel("Ridotti: ");
@@ -265,7 +288,7 @@ public class ReservationPanel extends JPanel {
 	}
 	
 	public Boolean getIntero() {
-		return interoButton.isSelected();
+		return intero;
 	}
 	
 	public RefreshTotale getListener() {
