@@ -33,7 +33,6 @@ public class MainFrame extends JFrame {
 		super("Multisala");
 		
 		UIManager.put("ToggleButton.disabledText", Color.RED);
-		UIManager.put("ToggleButton.highlight", Color.RED);
 
 		controller = new Controller();
 		bookingPanel = new BookingPanel(controller);
