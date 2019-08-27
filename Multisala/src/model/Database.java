@@ -394,9 +394,6 @@ public class Database {
 		while (result.next()) {
 			poltronaList.add(new PoltronaInProiezione(result.getInt(1), result.getInt(2), result.getString(3),
 					result.getString(4), result.getInt(5)));
-			
-			System.out.println(result.getInt(1) + " " + result.getInt(2) +" "+ result.getString(3)+" "+
-					result.getString(4)+ " "+result.getInt(5));
 		}
 		
 		checkPoltrona.close();
@@ -423,6 +420,36 @@ public class Database {
 
 	public List<Proiezione> getProiezione() {
 		return this.proList;
+	}
+
+	public void deletePosto(int codice, ProiezioneEvent proEvent) throws SQLException {
+		
+		String sql2 = "select id from film where titolo=?";
+		PreparedStatement idStmt = con.prepareStatement(sql2);
+		idStmt.setString(1, proEvent.getTitolo());
+		ResultSet result = idStmt.executeQuery();
+		result.next();
+		
+		String sql = "delete from poltrona_in_proiezione\n" +  
+				"where id=? and\n" + 
+				"data_=current_date() and\n" + 
+				"ora=? and\n" + 
+				"nome=? and\n" + 
+				"username='victoria' and\n" + 
+				"codice=?";
+		
+		PreparedStatement deleteStmt = con.prepareStatement(sql);
+		
+		deleteStmt.setInt(1, result.getInt(1));
+		deleteStmt.setString(2, proEvent.getOra());
+		deleteStmt.setInt(3, proEvent.getNumeroSala());
+		deleteStmt.setInt(4, codice);
+		
+		deleteStmt.executeUpdate();
+		
+		deleteStmt.close();
+		loadSala(proEvent);
+		loadPoltroneProiezione(proEvent);
 	}
 
 }

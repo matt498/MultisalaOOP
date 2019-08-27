@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -35,6 +36,8 @@ public class TableDialog extends JDialog {
 		cancelButton = new JButton("Cancel");
 
 		table.setRowHeight(25);
+		setSize(600, 450);
+		
 
 		JMenuItem removeItem = new JMenuItem("Delete row");
 		popup.add(removeItem);
@@ -58,7 +61,7 @@ public class TableDialog extends JDialog {
 				int row = table.getSelectedRow();
 
 				if (bookingTableListener != null) {
-					bookingTableListener.rowDeleted(row);
+					bookingTableListener.rowDeleted((int) tableModel.getValueAt(row, 1));
 					tableModel.fireTableRowsDeleted(row, row);
 				}
 			}
@@ -87,7 +90,7 @@ public class TableDialog extends JDialog {
 		tableModel.fireTableDataChanged();
 	}
 	
-	public void setPersonTableListener(BookingTableListener listener) {
+	public void setBookingTableListener(BookingTableListener listener) {
 		this.bookingTableListener = listener;
 	}
 }

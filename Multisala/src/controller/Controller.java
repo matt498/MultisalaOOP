@@ -90,4 +90,8 @@ public class Controller {
 	public void loadPoltroneProiezione(ProiezioneEvent proEvent) throws SQLException {
 		db.loadPoltroneProiezione(proEvent);
 	}
+
+	public void deletePosto(int codice, ProiezioneEvent proEvent) throws SQLException {
+		db.deletePosto(codice, proEvent);
+	}
 }

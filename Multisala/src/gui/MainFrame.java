@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 
 		controller = new Controller();
 		bookingPanel = new BookingPanel(controller, toolBar);
-		toolBar = new ToolBar(this, controller);
+		toolBar = new ToolBar(this, controller, bookingPanel.getResPanel());
 
 		setLayout(new BorderLayout());
 

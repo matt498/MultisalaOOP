@@ -31,4 +31,8 @@ public class BookingPanel extends JPanel {
 		return checkOutPanel;
 	}
 	
+	public ReservationPanel getResPanel() {
+		return reservationPanel;
+	}
+	
 }
