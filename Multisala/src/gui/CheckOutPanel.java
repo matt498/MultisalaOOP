@@ -46,7 +46,6 @@ public class CheckOutPanel extends JPanel {
 				totField.setText(totale.toString());
 			}
 		});
-
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
