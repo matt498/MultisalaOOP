@@ -2,6 +2,7 @@ package gui;
 
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -12,60 +13,45 @@ import javax.mail.internet.MimeMessage;
 
 public class MailUtility {
 
-	public static void sendMail (String dest, String mitt, String oggetto, String testoEmail) throws MessagingException {
-		// Recipient's email ID needs to be mentioned.
-	      String to = "matteferrari.85@gmail.com";
+	public static void sendMail(String recipient) throws MessagingException {
+		System.out.println("Sending email...");
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
 
-	      // Sender's email ID needs to be mentioned
-	      String from = "matteferrari.85@gmail.com";
-	      final String username = "Matteo Ferrari";//change accordingly
-	      final String password = "Matteoferrari98";//change accordingly
+		String myEmail = "cinemaOOP@gmail.com";
+		String password = "kanhuT-dokpiv-3budju";
 
-	      // Assuming you are sending email through relay.jangosmtp.net
-	      String host = "smtp.gmail.com";
+		Session session = Session.getInstance(props, new Authenticator() {
 
-	      Properties props = new Properties();
-	      props.put("mail.smtp.auth", "true");
-	      props.put("mail.smtp.starttls.enable", "true");
-	      props.put("mail.smtp.host", host);
-	      props.put("mail.smtp.port", "25");
-
-	      // Get the Session object.
-	      Session session = Session.getInstance(props,
-	         new javax.mail.Authenticator() {
-	            protected PasswordAuthentication getPasswordAuthentication() {
-	               return new PasswordAuthentication(username, password);
-	            }
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(myEmail, password);
+			}
 		});
 
-	      try {
-	            // Create a default MimeMessage object.
-	            Message message = new MimeMessage(session);
+		Message message = prepareMessage(session, myEmail, recipient);
+		
+		Transport.send(message);
+		System.out.println("Message sent");
 
-	   	   // Set From: header field of the header.
-		   message.setFrom(new InternetAddress(from));
+	}
 
-		   // Set To: header field of the header.
-		   message.setRecipients(Message.RecipientType.TO,
-	              InternetAddress.parse(to));
-
-		   // Set Subject: header field
-		   message.setSubject("Testing Subject");
-
-		   // Send the actual HTML message, as big as you like
-		   message.setContent(
-	              "<h1>This is actual message embedded in HTML tags</h1>",
-	             "text/html");
-
-		   // Send message
-		   Transport.send(message);
-
-		   System.out.println("Sent message successfully....");
-
-	      
-	} catch (MessagingException e) {
-		   e.printStackTrace();
-		  
-	      }
-}
+	private static Message prepareMessage(Session session, String myEmail, String recipient) {
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(myEmail));
+			message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+			message.setSubject("Biglietto Victoria");
+			message.setText("prova progetto OOP");
+			return message;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return null;
+		
+	}
 }

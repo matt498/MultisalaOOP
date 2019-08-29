@@ -7,7 +7,7 @@ public class ProvaMail {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			MailUtility.sendMail("matteferrari.85@gmail.com", "matteferrari.85@gmail.com", "Cyber", "Scopa.");
+			MailUtility.sendMail("matteferrari.85@gmail.com");
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
