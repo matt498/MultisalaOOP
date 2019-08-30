@@ -94,4 +94,8 @@ public class Controller {
 	public void deletePosto(int codice, ProiezioneEvent proEvent) throws SQLException {
 		db.deletePosto(codice, proEvent);
 	}
+	
+	public int getSizePoltronaList() {
+		return db.getSizePoltronaList();
+	}
 }
