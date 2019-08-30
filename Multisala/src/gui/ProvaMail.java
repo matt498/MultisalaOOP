@@ -2,6 +2,10 @@ package gui;
 
 import javax.mail.MessagingException;
 
+/*
+ * MAIN di prova per inviare una mail
+ */
+
 public class ProvaMail {
 
 	public static void main(String[] args) {
