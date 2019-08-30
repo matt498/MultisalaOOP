@@ -17,10 +17,14 @@ public class ToolBar extends JToolBar {
 	
 	private JButton bookingButton;
 	private TableDialog tableDialog;
+	private JButton plusButton;
 	
 	public ToolBar(JFrame parent, Controller controller, ReservationPanel resPanel) {
 		
-		bookingButton = new JButton(Utils.createImage("/images/icons8-book-16.png"));
+		bookingButton = new JButton(Utils.createImage("/images/icons8-book-25.png"));
+		plusButton = new JButton(Utils.createImage("/images/icons8-plus-25.png"));
+		
+		plusButton.setToolTipText("New Book");
 		bookingButton.setToolTipText("Booking Panel");
 		tableDialog = new TableDialog(parent);
 		
@@ -49,6 +53,7 @@ public class ToolBar extends JToolBar {
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		add(bookingButton);
+		add(plusButton);
 	}
 	
 	public void setData(List<PoltronaInProiezione> db) {
