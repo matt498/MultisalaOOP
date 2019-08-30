@@ -48,7 +48,7 @@ public class MailUtility {
 			return message;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error");
 		} 
 		
 		return null;
