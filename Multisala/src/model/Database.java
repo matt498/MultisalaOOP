@@ -451,5 +451,9 @@ public class Database {
 		loadSala(proEvent);
 		loadPoltroneProiezione(proEvent);
 	}
+	
+	public int getSizePoltronaList() {
+		return poltronaList.size();
+	}
 
 }

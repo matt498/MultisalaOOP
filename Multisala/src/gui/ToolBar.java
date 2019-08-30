@@ -28,6 +28,7 @@ public class ToolBar extends JToolBar {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tableDialog.setData(controller.getPoltronaList());
+				tableDialog.refresh();
 				tableDialog.setVisible(true);
 			}
 		});
