@@ -24,7 +24,7 @@ public class ToolBar extends JToolBar {
 		bookingButton = new JButton(Utils.createImage("/images/icons8-book-25.png"));
 		plusButton = new JButton(Utils.createImage("/images/icons8-plus-25.png"));
 		
-		plusButton.setToolTipText("New Book");
+		plusButton.setToolTipText("New Booking");
 		bookingButton.setToolTipText("Booking Panel");
 		tableDialog = new TableDialog(parent);
 		
