@@ -50,7 +50,8 @@ public class PrenotazioneEmailDialog extends JDialog {
 				setVisible(false);
 			}
 		});
-
+		
+		loadButton.setPreferredSize(cancelButton.getPreferredSize());
 		loadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -83,26 +84,30 @@ public class PrenotazioneEmailDialog extends JDialog {
 		GridBagConstraints gc = new GridBagConstraints();
 
 		//////// First line ////////
-		gc.gridx = 0;
+		gc.gridx = 1;
 		gc.gridy = 0;
-		gc.anchor = GridBagConstraints.LINE_END;
+		gc.anchor = GridBagConstraints.LINE_START;
 		p1.add(dateChooser, gc);
 
+		///////// Next Line ////////
 		gc.gridx = 1;
+		gc.gridy = 1;
 		p1.add(loadButton, gc);
 
 		//////// next line ////////
 		gc.gridx = 0;
 		gc.gridy++;
+		gc.anchor = GridBagConstraints.LINE_END;
 		p1.add(emailLabel, gc);
 
 		gc.gridx++;
+		gc.anchor = GridBagConstraints.LINE_START;
 		p1.add(emailField, gc);
 
 		////// Last line //////
 		gc.weighty = 0.5;
 		gc.gridy++;
-		gc.gridx = 0;
+		gc.gridx = 1;
 		p1.add(cancelButton, gc);
 
 		add(p1, BorderLayout.CENTER);

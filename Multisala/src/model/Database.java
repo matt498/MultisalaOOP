@@ -458,7 +458,7 @@ public class Database {
 		proSpecList.clear();
 
 		// domani la data sarà sbagliata
-		String sql = "select f.titolo, p.ora, p.nome from proiezione p join film f where username='victoria' and p.id=f.id and p.data=?";
+		String sql = "select f.titolo, p.ora, p.nome from proiezione p join film f where username='victoria' and p.id=f.id and p.data=? order by f.titolo";
 		PreparedStatement selectStmt = con.prepareStatement(sql);
 		selectStmt.setString(1, data);
 

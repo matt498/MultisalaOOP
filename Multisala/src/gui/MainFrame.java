@@ -55,6 +55,7 @@ public class MainFrame extends JFrame {
 				controller.disconnect();
 				dispose();
 				System.gc();
+				System.exit(0);
 			}
 
 		});
