@@ -94,4 +94,12 @@ public class Controller {
 	public void deletePosto(int codice, ProiezioneEvent proEvent) throws SQLException {
 		db.deletePosto(codice, proEvent);
 	}
+	
+	public void loadSpecificProiezione(String data) throws SQLException {
+		db.loadSpecificProiezione(data);
+	}
+	
+	public List<Proiezione> getSpecList() {
+		return db.getSpecList();
+	}
 }

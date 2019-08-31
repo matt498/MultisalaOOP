@@ -17,6 +17,7 @@ public class Database {
 
 	private Sala sala;
 	private List<Proiezione> proList;
+	private List<Proiezione> proSpecList;
 	private Connection con;
 	private Order order;
 	private List<PoltronaInProiezione> poltronaList;
@@ -28,6 +29,7 @@ public class Database {
 	public Database() {
 		sala = new Sala();
 		proList = new ArrayList<Proiezione>();
+		proSpecList = new ArrayList<Proiezione>();
 		order = new Order();
 		poltronaList = new ArrayList<PoltronaInProiezione>();
 	}
@@ -450,6 +452,33 @@ public class Database {
 		deleteStmt.close();
 		loadSala(proEvent);
 		loadPoltroneProiezione(proEvent);
+	}
+	
+	public void loadSpecificProiezione(String data) throws SQLException {
+		proSpecList.clear();
+
+		// domani la data sarà sbagliata
+		String sql = "select f.titolo, p.ora, p.nome from proiezione p join film f where username='victoria' and p.id=f.id and p.data=?";
+		PreparedStatement selectStmt = con.prepareStatement(sql);
+		selectStmt.setString(1, data);
+
+		ResultSet results = selectStmt.executeQuery();
+
+		while (results.next()) {
+			String ora = results.getTime("ora").toString();
+			String titolo = results.getString("titolo");
+			int numeroSala = results.getInt("nome");
+
+			Proiezione proiezione = new Proiezione(titolo, ora, numeroSala);
+			proSpecList.add(proiezione);
+
+		}
+		results.close();
+		selectStmt.close();
+	}
+	
+	public List<Proiezione> getSpecList() {
+		return this.proSpecList;
 	}
 
 }

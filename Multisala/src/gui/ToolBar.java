@@ -18,6 +18,7 @@ public class ToolBar extends JToolBar {
 	private JButton bookingButton;
 	private TableDialog tableDialog;
 	private JButton plusButton;
+	private PrenotazioneEmailDialog emailDialog;
 	
 	public ToolBar(JFrame parent, Controller controller, ReservationPanel resPanel) {
 		
@@ -26,7 +27,9 @@ public class ToolBar extends JToolBar {
 		
 		plusButton.setToolTipText("New Booking");
 		bookingButton.setToolTipText("Booking Panel");
+		
 		tableDialog = new TableDialog(parent);
+		emailDialog = new PrenotazioneEmailDialog(controller);
 		
 		bookingButton.addActionListener(new ActionListener() {
 			@Override
@@ -48,6 +51,13 @@ public class ToolBar extends JToolBar {
 				
 				resPanel.remPosti();
 				resPanel.lowerLayout();
+			}
+		});
+		
+		plusButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				emailDialog.setVisible(true);
 			}
 		});
 		
