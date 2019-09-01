@@ -158,7 +158,7 @@ public class PrenotazioneEmailDialog extends JDialog {
 		layoutComponent();
 
 		pack();
-
+		///// prova per casa
 	}
 
 	private void layoutComponent() {
