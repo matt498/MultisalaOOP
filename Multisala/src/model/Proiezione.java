@@ -16,6 +16,12 @@ public class Proiezione {
 		this.numeroSala = numeroSala;
 	}
 
+	public Proiezione(String titolo, String ora, int numeroSala) {
+		this.titolo = titolo;
+		this.ora = ora;
+		this.numeroSala = numeroSala;
+	}
+
 	public Integer getId() {
 		return id;
 	}

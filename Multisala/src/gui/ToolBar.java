@@ -17,12 +17,19 @@ public class ToolBar extends JToolBar {
 	
 	private JButton bookingButton;
 	private TableDialog tableDialog;
+	private JButton plusButton;
+	private PrenotazioneEmailDialog emailDialog;
 	
 	public ToolBar(JFrame parent, Controller controller, ReservationPanel resPanel) {
 		
-		bookingButton = new JButton(Utils.createImage("/images/icons8-book-16.png"));
+		bookingButton = new JButton(Utils.createImage("/images/icons8-book-25.png"));
+		plusButton = new JButton(Utils.createImage("/images/icons8-plus-25.png"));
+		
+		plusButton.setToolTipText("New Booking");
 		bookingButton.setToolTipText("Booking Panel");
+		
 		tableDialog = new TableDialog(parent);
+		emailDialog = new PrenotazioneEmailDialog(controller);
 		
 		bookingButton.addActionListener(new ActionListener() {
 			@Override
@@ -47,8 +54,16 @@ public class ToolBar extends JToolBar {
 			}
 		});
 		
+		plusButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				emailDialog.setVisible(true);
+			}
+		});
+		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		add(bookingButton);
+		add(plusButton);
 	}
 	
 	public void setData(List<PoltronaInProiezione> db) {

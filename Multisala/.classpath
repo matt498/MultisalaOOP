@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="/Users/matteoferrari/Downloads/mysql-connector-java-5.1.45-bin.jar"/>
 	<classpathentry kind="lib" path="/Users/matteoferrari/Downloads/activation.jar"/>
 	<classpathentry kind="lib" path="/Users/matteoferrari/Downloads/javamail-1.4.5/mail.jar"/>
+	<classpathentry kind="lib" path="/Users/matteoferrari/Downloads/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

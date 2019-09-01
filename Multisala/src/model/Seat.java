@@ -12,6 +12,11 @@ public class Seat {
 		this.occupato = false;
 	}
 
+	public Seat(int int1) {
+		// TODO Auto-generated constructor stub
+		this.numero=int1;
+	}
+
 	public Integer getNumero() {
 		return numero;
 	}

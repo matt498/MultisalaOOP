@@ -3,6 +3,7 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import gui.EmailBookingEvent;
 import gui.ProiezioneEvent;
 import model.Database;
 import model.PoltronaInProiezione;
@@ -95,7 +96,23 @@ public class Controller {
 		db.deletePosto(codice, proEvent);
 	}
 	
-	public int getSizePoltronaList() {
-		return db.getSizePoltronaList();
+	public void loadSpecificProiezione(String data) throws SQLException {
+		db.loadSpecificProiezione(data);
+	}
+	
+	public List<Proiezione> getSpecList() {
+		return db.getSpecList();
+	}
+	
+	public void loadSpecPosti(String titolo, String ora, String data, int numeroSala) throws SQLException {
+		db.loadSpecPosti(titolo, ora, data, numeroSala);
+	}
+	
+	public List<Seat> getSpecPostiList() {
+		return db.getSpecPostiList();
+	}
+	
+	public void checkOutPrenotazione(int numero, EmailBookingEvent e) throws SQLException {
+		db.checkOutPrenotazione(numero, e);
 	}
 }

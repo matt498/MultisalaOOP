@@ -11,15 +11,18 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import gui.EmailBookingEvent;
 import gui.ProiezioneEvent;
 
 public class Database {
 
 	private Sala sala;
 	private List<Proiezione> proList;
+	private List<Proiezione> proSpecList;
 	private Connection con;
 	private Order order;
 	private List<PoltronaInProiezione> poltronaList;
+	private List<Seat> specPostiList;
 
 	private int port;
 	private String user;
@@ -28,8 +31,10 @@ public class Database {
 	public Database() {
 		sala = new Sala();
 		proList = new ArrayList<Proiezione>();
+		proSpecList = new ArrayList<Proiezione>();
 		order = new Order();
 		poltronaList = new ArrayList<PoltronaInProiezione>();
+		specPostiList = new ArrayList<Seat>();
 	}
 
 	public int getSeat() {
@@ -452,8 +457,101 @@ public class Database {
 		loadPoltroneProiezione(proEvent);
 	}
 	
-	public int getSizePoltronaList() {
-		return poltronaList.size();
+	public void loadSpecificProiezione(String data) throws SQLException {
+		proSpecList.clear();
+
+		// domani la data sarà sbagliata
+		String sql = "select f.titolo, p.ora, p.nome from proiezione p join film f where username='victoria' and p.id=f.id and p.data=? order by f.titolo";
+		PreparedStatement selectStmt = con.prepareStatement(sql);
+		selectStmt.setString(1, data);
+
+		ResultSet results = selectStmt.executeQuery();
+
+		while (results.next()) {
+			String ora = results.getTime("ora").toString();
+			String titolo = results.getString("titolo");
+			int numeroSala = results.getInt("nome");
+
+			Proiezione proiezione = new Proiezione(titolo, ora, numeroSala);
+			proSpecList.add(proiezione);
+
+		}
+		results.close();
+		selectStmt.close();
+	}
+	
+	public List<Proiezione> getSpecList() {
+		return this.proSpecList;
+	}
+	
+	public void loadSpecPosti(String titolo, String ora, String data, int numeroSala) throws SQLException {
+		
+		specPostiList.clear();
+		
+		String sql = "select p.numero \n" + 
+				"from poltrona p \n" + 
+				"where p.nome=? and \n" + 
+				"p.username='victoria' and\n" + 
+				"p.numero not in ( select p1.numero \n" + 
+				"					from poltrona_in_proiezione p1\n" + 
+				"                    join film f on f.id=p1.id\n" + 
+				"                    where f.titolo=? and\n" + 
+				"                    p1.data_=? and\n" + 
+				"                    p1.ora =? and\n" + 
+				"                    p1.nome=? and\n" + 
+				"                    username='victoria');";
+		
+		PreparedStatement findPostiStmt = con.prepareStatement(sql);
+		findPostiStmt.setInt(1, numeroSala);
+		findPostiStmt.setString(2, titolo);
+		findPostiStmt.setString(3, data);
+		findPostiStmt.setString(4, ora);
+		findPostiStmt.setInt(5, numeroSala);
+		
+		ResultSet results = findPostiStmt.executeQuery();
+
+		while (results.next()) {
+			specPostiList.add(new Seat(results.getInt(1)));
+		}
+		
+		results.close();
+		findPostiStmt.close();
+	}
+	
+	public List<Seat> getSpecPostiList() {
+		return this.specPostiList;
+	}
+	
+	public void checkOutPrenotazione(int numero, EmailBookingEvent e) throws SQLException {
+		
+		String sql = "insert into biglietto (data, prezzo, sel) values (current_date(),'10','intero')";
+		PreparedStatement insertStmt = con.prepareStatement(sql);
+
+		String sql3 = "select codice from biglietto order by codice desc limit 1";
+		PreparedStatement codiceStmt = con.prepareStatement(sql3);
+
+		String sql2 = "insert into poltrona_in_proiezione (id, data_,ora,nome,username,numero, codice)values (\n"
+				+ "(select id from film where titolo=? limit 1), \n" + "?,\n" + "?,\n" + "?,\n"
+				+ "'victoria',\n" + "?,\n" + "?\n" + ");";
+		PreparedStatement insertPoltronaStmt = con.prepareStatement(sql2);
+		insertPoltronaStmt.setString(1, e.getTitolo());
+		insertPoltronaStmt.setString(2, e.getData());
+		insertPoltronaStmt.setString(3, e.getOra());
+		insertPoltronaStmt.setInt(4, e.getNumeroSala());
+		insertPoltronaStmt.setInt(5, numero);
+		
+		insertStmt.executeUpdate();
+		ResultSet result = codiceStmt.executeQuery();
+		result.next();
+		int cod = result.getInt(1);
+		
+		insertStmt.close();
+		result.close();
+		
+		insertPoltronaStmt.setInt(6, cod);
+		insertPoltronaStmt.executeUpdate();
+		
+		insertPoltronaStmt.close();
 	}
 
 }
