@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import gui.EmailBookingEvent;
 import gui.ProiezioneEvent;
 
 public class Database {
@@ -519,6 +520,38 @@ public class Database {
 	
 	public List<Seat> getSpecPostiList() {
 		return this.specPostiList;
+	}
+	
+	public void checkOutPrenotazione(int numero, EmailBookingEvent e) throws SQLException {
+		
+		String sql = "insert into biglietto (data, prezzo, sel) values (current_date(),'10','intero')";
+		PreparedStatement insertStmt = con.prepareStatement(sql);
+
+		String sql3 = "select codice from biglietto order by codice desc limit 1";
+		PreparedStatement codiceStmt = con.prepareStatement(sql3);
+
+		String sql2 = "insert into poltrona_in_proiezione (id, data_,ora,nome,username,numero, codice)values (\n"
+				+ "(select id from film where titolo=? limit 1), \n" + "?,\n" + "?,\n" + "?,\n"
+				+ "'victoria',\n" + "?,\n" + "?\n" + ");";
+		PreparedStatement insertPoltronaStmt = con.prepareStatement(sql2);
+		insertPoltronaStmt.setString(1, e.getTitolo());
+		insertPoltronaStmt.setString(2, e.getData());
+		insertPoltronaStmt.setString(3, e.getOra());
+		insertPoltronaStmt.setInt(4, e.getNumeroSala());
+		insertPoltronaStmt.setInt(5, numero);
+		
+		insertStmt.executeUpdate();
+		ResultSet result = codiceStmt.executeQuery();
+		result.next();
+		int cod = result.getInt(1);
+		
+		insertStmt.close();
+		result.close();
+		
+		insertPoltronaStmt.setInt(6, cod);
+		insertPoltronaStmt.executeUpdate();
+		
+		insertPoltronaStmt.close();
 	}
 
 }

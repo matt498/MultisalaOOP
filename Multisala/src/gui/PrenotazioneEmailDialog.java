@@ -41,6 +41,7 @@ public class PrenotazioneEmailDialog extends JDialog {
 	private JButton okButton;
 	private JButton cancelButton;
 	private ListModel listModel;
+	private EmailBookingEvent ebe;
 
 	public PrenotazioneEmailDialog(Controller controller) {
 
@@ -58,13 +59,13 @@ public class PrenotazioneEmailDialog extends JDialog {
 		okButton = new JButton("Confirm");
 		cancelButton = new JButton("Cancel");
 		listModel = new ListModel();
-		
+
 		/// set up postList
 		postoList.setModel(listModel);
 		postoList.setVisibleRowCount(10);
 		postoList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		postoList.setLayoutOrientation(JList.VERTICAL);
-		
+
 		checkBox.setEnabled(false);
 		postoList.setEnabled(false);
 		emailField.setEnabled(false);
@@ -73,6 +74,8 @@ public class PrenotazioneEmailDialog extends JDialog {
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				checkBox.setSelected(false);
+				postoList.setEnabled(false);
 				setVisible(false);
 			}
 		});
@@ -95,12 +98,12 @@ public class PrenotazioneEmailDialog extends JDialog {
 				checkBox.setEnabled(true);
 			}
 		});
-		
+
 		checkBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
-				if(row != -1) {
+				if (row != -1) {
 					postoList.setEnabled(checkBox.isSelected());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					String date = sdf.format(dateChooser.getDate());
@@ -108,25 +111,52 @@ public class PrenotazioneEmailDialog extends JDialog {
 					System.out.println(titolo);
 					String ora = (String) table.getValueAt(row, 1);
 					int numeroSala = (Integer) table.getValueAt(row, 2);
-					
+					ebe = new EmailBookingEvent(titolo, date, ora, numeroSala);
+
 					try {
 						controller.loadSpecPosti(titolo, ora, date, numeroSala);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
-					
+
 					listModel.setData(controller.getSpecPostiList());
 					listModel.refresh();
+					if(checkBox.isSelected())
+						okButton.setEnabled(true);
+					else
+						okButton.setEnabled(false);
 				}
-				
+
 			}
 		});
-		
+
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Integer> selectedList = postoList.getSelectedValuesList();
+
+				if (selectedList.size() != 0) {
+					for (Integer numero : selectedList) {
+						try {
+							controller.checkOutPrenotazione(numero, ebe);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				}
+				postoList.setSelectedIndex(-1);
+				checkBox.setSelected(false);
+				postoList.setEnabled(false);
+				setVisible(false);
+			}
+		});
+
 		table.setRowHeight(25);
 		setLayout(new BorderLayout());
 		add(new JScrollPane(table), BorderLayout.NORTH);
 		layoutComponent();
-		
+
 		pack();
 
 	}
@@ -189,7 +219,7 @@ public class PrenotazioneEmailDialog extends JDialog {
 		p1.add(cancelButton, gc);
 
 		add(p1, BorderLayout.CENTER);
-		
+
 	}
 
 	public void setData(List<Proiezione> proList) {
