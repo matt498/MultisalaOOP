@@ -11,7 +11,7 @@ public class App {
 			public void run() {
 				// TODO Auto-generated method stub
 				new MainFrame();
-				//commento di prova
+				//commento di prova1
 			}
 		});
 	}
