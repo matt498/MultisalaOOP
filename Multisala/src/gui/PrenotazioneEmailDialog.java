@@ -121,7 +121,7 @@ public class PrenotazioneEmailDialog extends JDialog {
 
 					listModel.setData(controller.getSpecPostiList());
 					listModel.refresh();
-					if(checkBox.isSelected())
+					if (checkBox.isSelected())
 						okButton.setEnabled(true);
 					else
 						okButton.setEnabled(false);
@@ -154,7 +154,9 @@ public class PrenotazioneEmailDialog extends JDialog {
 
 		table.setRowHeight(25);
 		setLayout(new BorderLayout());
-		add(new JScrollPane(table), BorderLayout.NORTH);
+		JScrollPane sp = new JScrollPane(table);
+		sp.setPreferredSize(new Dimension(350, 250));
+		add(sp, BorderLayout.NORTH);
 		layoutComponent();
 
 		pack();
@@ -193,7 +195,7 @@ public class PrenotazioneEmailDialog extends JDialog {
 		gc.anchor = GridBagConstraints.LINE_START;
 		JScrollPane listScroller = new JScrollPane(postoList);
 		Dimension dim = emailField.getPreferredSize();
-		dim.height = 140;
+		dim.height = 100;
 		listScroller.setPreferredSize(dim);
 		p1.add(listScroller, gc);
 
