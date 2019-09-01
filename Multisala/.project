@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>sala.png</name>
-			<type>1</type>
-			<location>/Users/matteoferrari/Desktop/sala.png</location>
-		</link>
-	</linkedResources>
 </projectDescription>

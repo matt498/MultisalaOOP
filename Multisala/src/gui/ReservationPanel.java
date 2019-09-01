@@ -235,12 +235,13 @@ public class ReservationPanel extends JPanel {
 					SeatButton seatButton = new SeatButton(seat.getNumero(), seat.getOccupato(), this, this.controller); // mettere a posto
 																									// l'indice
 					seatButton.setEnabled(!(seat.getOccupato()));
-					if(seat.getOccupato()) {
+					//tolto immagini provvisoriamente
+					/*if(seat.getOccupato()) {
 						seatButton.setIcon(Utils.createImage("/images/icons8-person-20.png"));
 					}
 					else {
 						seatButton.setIcon(Utils.createImage("/images/icons8-filled-circle-20.png"));
-					}
+					}*/
 					lowerPanel.add(seatButton, gc);
 					gc.gridx++;
 				}

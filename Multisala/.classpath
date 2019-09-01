@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Users/matteoferrari/Downloads/mysql-connector-java-5.1.45-bin.jar"/>
-	<classpathentry kind="lib" path="/Users/matteoferrari/Downloads/activation.jar"/>
-	<classpathentry kind="lib" path="/Users/matteoferrari/Downloads/javamail-1.4.5/mail.jar"/>
-	<classpathentry kind="lib" path="/Users/matteoferrari/Downloads/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="/JDBC/lib/mysql-connector-java-5.1.45-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
