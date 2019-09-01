@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import gui.EmailBookingEvent;
 import gui.ProiezioneEvent;
 
@@ -23,6 +25,7 @@ public class Database {
 	private Order order;
 	private List<PoltronaInProiezione> poltronaList;
 	private List<Seat> specPostiList;
+	private List<Integer> codici;
 
 	private int port;
 	private String user;
@@ -35,6 +38,7 @@ public class Database {
 		order = new Order();
 		poltronaList = new ArrayList<PoltronaInProiezione>();
 		specPostiList = new ArrayList<Seat>();
+		codici = new ArrayList<Integer>();
 	}
 
 	public int getSeat() {
@@ -552,6 +556,26 @@ public class Database {
 		insertPoltronaStmt.executeUpdate();
 		
 		insertPoltronaStmt.close();
+	}
+	
+	public List<Integer> getCodici(int size) throws SQLException {
+		codici.clear();
+		
+		String sql3 = "select codice from biglietto order by codice desc limit ?";
+		PreparedStatement codiceStmt = con.prepareStatement(sql3);
+		
+		codiceStmt.setInt(1, size);
+		
+		ResultSet results = codiceStmt.executeQuery();
+		
+		while(results.next()) {
+			codici.add(results.getInt(1));
+		}
+		
+		results.close();
+		codiceStmt.close();
+		
+		return codici;
 	}
 
 }

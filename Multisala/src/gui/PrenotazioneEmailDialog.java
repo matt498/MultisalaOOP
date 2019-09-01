@@ -68,7 +68,6 @@ public class PrenotazioneEmailDialog extends JDialog {
 
 		checkBox.setEnabled(false);
 		postoList.setEnabled(false);
-		emailField.setEnabled(false);
 		okButton.setEnabled(false);
 
 		cancelButton.addActionListener(new ActionListener() {
@@ -121,7 +120,7 @@ public class PrenotazioneEmailDialog extends JDialog {
 
 					listModel.setData(controller.getSpecPostiList());
 					listModel.refresh();
-					if(checkBox.isSelected())
+					if (checkBox.isSelected())
 						okButton.setEnabled(true);
 					else
 						okButton.setEnabled(false);
@@ -134,7 +133,15 @@ public class PrenotazioneEmailDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Integer> selectedList = postoList.getSelectedValuesList();
-
+				int size = selectedList.size();
+				
+				if(size == 0) {
+					postoList.setSelectedIndex(-1);
+					checkBox.setSelected(false);
+					postoList.setEnabled(false);
+					setVisible(false);
+				}
+				
 				if (selectedList.size() != 0) {
 					for (Integer numero : selectedList) {
 						try {
@@ -145,20 +152,41 @@ public class PrenotazioneEmailDialog extends JDialog {
 						}
 					}
 				}
+				
+				List<Integer> codici = null;
+				
+				try {
+					codici = controller.getCodici(size);
+					
+					for(Integer codi : codici)
+						System.out.println(codi);
+					
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				MailUtility mail = new MailUtility(emailField.getText(), codici);
+				
+				Thread t = new Thread(mail);
+				t.start();
+				
 				postoList.setSelectedIndex(-1);
 				checkBox.setSelected(false);
 				postoList.setEnabled(false);
 				setVisible(false);
+
 			}
 		});
 
 		table.setRowHeight(25);
 		setLayout(new BorderLayout());
-		add(new JScrollPane(table), BorderLayout.NORTH);
+		JScrollPane sp = new JScrollPane(table);
+		sp.setPreferredSize(new Dimension(350, 250));
+		add(sp, BorderLayout.NORTH);
 		layoutComponent();
 
 		pack();
-
+		///// prova per casa
 	}
 
 	private void layoutComponent() {
@@ -193,7 +221,7 @@ public class PrenotazioneEmailDialog extends JDialog {
 		gc.anchor = GridBagConstraints.LINE_START;
 		JScrollPane listScroller = new JScrollPane(postoList);
 		Dimension dim = emailField.getPreferredSize();
-		dim.height = 140;
+		dim.height = 100;
 		listScroller.setPreferredSize(dim);
 		p1.add(listScroller, gc);
 
