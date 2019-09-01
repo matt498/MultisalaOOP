@@ -21,6 +21,7 @@ public class Database {
 	private Connection con;
 	private Order order;
 	private List<PoltronaInProiezione> poltronaList;
+	private List<Seat> specPostiList;
 
 	private int port;
 	private String user;
@@ -32,6 +33,7 @@ public class Database {
 		proSpecList = new ArrayList<Proiezione>();
 		order = new Order();
 		poltronaList = new ArrayList<PoltronaInProiezione>();
+		specPostiList = new ArrayList<Seat>();
 	}
 
 	public int getSeat() {
@@ -479,6 +481,44 @@ public class Database {
 	
 	public List<Proiezione> getSpecList() {
 		return this.proSpecList;
+	}
+	
+	public void loadSpecPosti(String titolo, String ora, String data, int numeroSala) throws SQLException {
+		
+		specPostiList.clear();
+		
+		String sql = "select p.numero \n" + 
+				"from poltrona p \n" + 
+				"where p.nome=? and \n" + 
+				"p.username='victoria' and\n" + 
+				"p.numero not in ( select p1.numero \n" + 
+				"					from poltrona_in_proiezione p1\n" + 
+				"                    join film f on f.id=p1.id\n" + 
+				"                    where f.titolo=? and\n" + 
+				"                    p1.data_=? and\n" + 
+				"                    p1.ora =? and\n" + 
+				"                    p1.nome=? and\n" + 
+				"                    username='victoria');";
+		
+		PreparedStatement findPostiStmt = con.prepareStatement(sql);
+		findPostiStmt.setInt(1, numeroSala);
+		findPostiStmt.setString(2, titolo);
+		findPostiStmt.setString(3, data);
+		findPostiStmt.setString(4, ora);
+		findPostiStmt.setInt(5, numeroSala);
+		
+		ResultSet results = findPostiStmt.executeQuery();
+
+		while (results.next()) {
+			specPostiList.add(new Seat(results.getInt(1)));
+		}
+		
+		results.close();
+		findPostiStmt.close();
+	}
+	
+	public List<Seat> getSpecPostiList() {
+		return this.specPostiList;
 	}
 
 }

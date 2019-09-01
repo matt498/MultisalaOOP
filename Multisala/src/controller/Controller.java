@@ -102,4 +102,12 @@ public class Controller {
 	public List<Proiezione> getSpecList() {
 		return db.getSpecList();
 	}
+	
+	public void loadSpecPosti(String titolo, String ora, String data, int numeroSala) throws SQLException {
+		db.loadSpecPosti(titolo, ora, data, numeroSala);
+	}
+	
+	public List<Seat> getSpecPostiList() {
+		return db.getSpecPostiList();
+	}
 }
