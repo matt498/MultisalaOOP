@@ -115,4 +115,8 @@ public class Controller {
 	public void checkOutPrenotazione(int numero, EmailBookingEvent e) throws SQLException {
 		db.checkOutPrenotazione(numero, e);
 	}
+	
+	public List<Integer> getCodici(int size) throws SQLException {
+		return db.getCodici(size);
+	}
 }

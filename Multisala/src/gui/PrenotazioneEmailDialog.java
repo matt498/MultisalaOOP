@@ -68,7 +68,6 @@ public class PrenotazioneEmailDialog extends JDialog {
 
 		checkBox.setEnabled(false);
 		postoList.setEnabled(false);
-		emailField.setEnabled(false);
 		okButton.setEnabled(false);
 
 		cancelButton.addActionListener(new ActionListener() {
@@ -134,7 +133,15 @@ public class PrenotazioneEmailDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Integer> selectedList = postoList.getSelectedValuesList();
-
+				int size = selectedList.size();
+				
+				if(size == 0) {
+					postoList.setSelectedIndex(-1);
+					checkBox.setSelected(false);
+					postoList.setEnabled(false);
+					setVisible(false);
+				}
+				
 				if (selectedList.size() != 0) {
 					for (Integer numero : selectedList) {
 						try {
@@ -145,10 +152,29 @@ public class PrenotazioneEmailDialog extends JDialog {
 						}
 					}
 				}
+				
+				List<Integer> codici = null;
+				
+				try {
+					codici = controller.getCodici(size);
+					
+					for(Integer codi : codici)
+						System.out.println(codi);
+					
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				MailUtility mail = new MailUtility(emailField.getText(), codici);
+				
+				Thread t = new Thread(mail);
+				t.start();
+				
 				postoList.setSelectedIndex(-1);
 				checkBox.setSelected(false);
 				postoList.setEnabled(false);
 				setVisible(false);
+
 			}
 		});
 
