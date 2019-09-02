@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -234,14 +236,16 @@ public class ReservationPanel extends JPanel {
 					Seat seat = sala.getSeatList().get(cont);
 					SeatButton seatButton = new SeatButton(seat.getNumero(), seat.getOccupato(), this, this.controller); // mettere a posto
 																									// l'indice
+					Image Icon2 = new ImageIcon(this.getClass().getResource("/icons8-person-20.png")).getImage();
+					Image Icon3 = new ImageIcon(this.getClass().getResource("/icons8-filled-circle-20.png")).getImage();
 					seatButton.setEnabled(!(seat.getOccupato()));
 					//tolto immagini provvisoriamente
-					/*if(seat.getOccupato()) {
-						seatButton.setIcon(Utils.createImage("/images/icons8-person-20.png"));
+					if(seat.getOccupato()) {
+						seatButton.setIcon(new ImageIcon(Icon2));
 					}
 					else {
-						seatButton.setIcon(Utils.createImage("/images/icons8-filled-circle-20.png"));
-					}*/
+						seatButton.setIcon(new ImageIcon(Icon3));
+					}
 					lowerPanel.add(seatButton, gc);
 					gc.gridx++;
 				}
