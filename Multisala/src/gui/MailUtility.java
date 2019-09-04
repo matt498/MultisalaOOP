@@ -3,14 +3,20 @@ package gui;
 import java.util.List;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class MailUtility implements Runnable {
 	
@@ -31,11 +37,22 @@ public class MailUtility implements Runnable {
 			
 			String testo = "Grazie per aver scelto il nostro cinema.\nCodici biglietti: ";
 			
+			Multipart multipart = new MimeMultipart();
+			MimeBodyPart messagebodypart = new MimeBodyPart();
+			MimeBodyPart pdfAttachment = new MimeBodyPart();
+			pdfAttachment.attachFile("C:/Users/User/Desktop/1_Topologia.pdf");	
+			multipart.addBodyPart(pdfAttachment);
+			
+			
+			
 			for(Integer code : codici) {
 				testo = testo.concat(code.toString() + "-");
 			}
 			
-			message.setText(testo);
+			messagebodypart.setText(testo);
+			multipart.addBodyPart(messagebodypart);
+			message.setContent(multipart);
+			
 			return message;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
