@@ -11,5 +11,37 @@
 	<classpathentry kind="lib" path="C:/Users/User/Desktop/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/User/Desktop/mail.jar"/>
 	<classpathentry kind="lib" path="C:/Users/User/Desktop/MultisalaOOP/Multisala/src/images"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/barcodes-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/barcodes-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/barcodes-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/font-asian-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/forms-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/forms-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/forms-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/hyph-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/io-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/io-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/io-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/kernel-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/kernel-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/kernel-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/layout-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/layout-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/layout-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/pdfa-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/pdfa-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/pdfa-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/pdftest-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/pdftest-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/pdftest-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/sign-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/sign-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/sign-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/styled-xml-parser-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/styled-xml-parser-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/styled-xml-parser-7.1.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/svg-7.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/svg-7.1.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/jar dir/svg-7.1.3-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

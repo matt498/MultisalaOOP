@@ -51,6 +51,7 @@ public class PrenotazioneEmailDialog extends JDialog {
 
 		dateChooser = new JDateChooser();
 		loadButton = new JButton("Load");
+		
 		textArea = new JTextArea();
 		checkBox = new JCheckBox("Seat: ");
 		postoList = new JList<Integer>();
@@ -186,7 +187,6 @@ public class PrenotazioneEmailDialog extends JDialog {
 		layoutComponent();
 
 		pack();
-		///// prova per casa
 	}
 
 	private void layoutComponent() {

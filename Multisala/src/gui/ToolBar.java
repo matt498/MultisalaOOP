@@ -27,13 +27,7 @@ public class ToolBar extends JToolBar {
 	
 	public ToolBar(JFrame parent, Controller controller, ReservationPanel resPanel) {
 		
-		//tolto immagini dal costruttore
-		//ImageIcon Icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("//images//icons8-book-25.png"));
-		//String current;
-		//current = new java.io.File( ".").getCanonicalPath();
-		//String path = current.concat("\\icons8-image.png");
-		//System.out.println(path);
-		//ImageIcon Icon1 = new ImageIcon(Toolkit.getDefaultToolkit().getClass().getResource("\\icons8-plus-25.png"));
+	
 		bookingButton = new JButton();
 		Image Icon1 = new ImageIcon(this.getClass().getResource("/icons8-book-25.png")).getImage();
 		bookingButton.setIcon(new ImageIcon(Icon1));
