@@ -23,8 +23,6 @@ public class CheckOutPanel extends JPanel {
 
 	private JLabel totLabel;
 	private JTextField totField;
-	private JLabel scontoLabel;
-	private JTextField scontoField;
 	private JButton okButton;
 	private JButton cancelButton;
 	private ReservationPanel resPanel;
@@ -33,8 +31,6 @@ public class CheckOutPanel extends JPanel {
 
 		totLabel = new JLabel("Totale: ");
 		totField = new JTextField(10);
-		scontoLabel = new JLabel("Sconto: ");
-		scontoField = new JTextField(10);
 		okButton = new JButton("OK");
 		cancelButton = new JButton("Cancel");
 		this.resPanel = resPanel;
@@ -129,16 +125,6 @@ public class CheckOutPanel extends JPanel {
 		/// Second Row ///
 
 		gc.gridy++;
-		gc.gridx = 0;
-
-		add(scontoLabel, gc);
-
-		gc.gridx = 1;
-		add(scontoField, gc);
-
-		/// Third Row ///
-
-		gc.gridy++;
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.LINE_START;
 		gc.insets = new Insets(40, 0, 0, 0);
@@ -148,7 +134,7 @@ public class CheckOutPanel extends JPanel {
 
 		add(okButton, gc);
 
-		/// Fourth Row ///
+		/// Third Row ///
 
 		gc.gridy++;
 		gc.insets = new Insets(0, 0, 0, 0);
