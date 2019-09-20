@@ -37,7 +37,7 @@ public class MailUtility implements Runnable {
 			Multipart multipart = new MimeMultipart();
 			MimeBodyPart messagebodypart = new MimeBodyPart();
 			MimeBodyPart pdfAttachment = new MimeBodyPart();
-			pdfAttachment.attachFile("/Users/matteoferrari/Downloads/sol2018-07-16-A.pdf");
+			pdfAttachment.attachFile("/Users/matteoferrari/Desktop/bigliettoCinema.pdf");
 			multipart.addBodyPart(pdfAttachment);
 			
 			for(Integer code : codici) {
